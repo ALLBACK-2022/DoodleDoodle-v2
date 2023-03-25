@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    generate-ddl: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgresql
+    username: root
+    password: 1234
+
+  logging:
+    level:
+      org.hibernate.SQL: debug
+      org.hibernate.type: trace
