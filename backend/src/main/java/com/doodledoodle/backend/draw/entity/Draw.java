@@ -35,8 +35,4 @@ public class Draw extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "game_id")
   private Game game;
-
-  @OneToMany(mappedBy = "draw")
-  @JoinColumn(name = "result_id")
-  private List<Result> results = new ArrayList<>();
 }

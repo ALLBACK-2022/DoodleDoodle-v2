@@ -2,6 +2,7 @@ package com.doodledoodle.backend.result.entity;
 
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.draw.entity.Draw;
+import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +36,7 @@ public class Result extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "game_id")
-  private Result result;
+  private Game game;
 
   @ManyToOne
   @JoinColumn(name = "draw_id")

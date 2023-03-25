@@ -32,6 +32,5 @@ public class Dictionary extends BaseEntity {
   private Integer imgUrl;
 
   @OneToOne
-  @JoinColumn(name = "result_id")
   private Result result;
 }

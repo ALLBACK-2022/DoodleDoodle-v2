@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -30,11 +31,6 @@ public class Game extends BaseEntity {
 
   private Integer playerNum;
 
-  @OneToMany(mappedBy = "game")
-  @JoinColumn(name = "draw_id")
-  private List<Draw> draws = new ArrayList<>();
 
-  @OneToMany(mappedBy = "result")
-  @JoinColumn(name = "result_id")
-  private List<Result> results = new ArrayList<>();
+
 }
