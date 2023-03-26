@@ -28,11 +28,11 @@ public class Result extends BaseEntity {
 
   private Float simillarity;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dictionary_id")
   private Dictionary dictionary;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "game_id")
   private Game game;
 
