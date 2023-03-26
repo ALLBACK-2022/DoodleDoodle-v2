@@ -1,7 +1,8 @@
 package com.doodledoodle.backend.dictionary.service;
 
-import org.springframework.stereotype.Service;
+import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponseDto;
 
-@Service
-public class DictionaryService {
+public interface DictionaryService {
+    void initializeDictionary();
+    DictionaryResponseDto getRandomDictionary();
 }

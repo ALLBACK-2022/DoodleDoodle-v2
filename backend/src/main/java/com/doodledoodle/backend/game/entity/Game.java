@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.game.entity;
 
-import com.doodledoodle.backend.global.entity.BaseEntity;
+import com.doodledoodle.backend.global.audit.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

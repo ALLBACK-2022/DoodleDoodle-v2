@@ -3,7 +3,7 @@ package com.doodledoodle.backend.result.entity;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
-import com.doodledoodle.backend.global.entity.BaseEntity;
+import com.doodledoodle.backend.global.audit.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,7 +26,7 @@ public class Result extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Float simillarity;
+  private Float similarity;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dictionary_id")
@@ -41,8 +41,8 @@ public class Result extends BaseEntity {
   private Draw draw;
 
   @Builder
-  public Result(Float simillarity, Dictionary dictionary, Game game, Draw draw) {
-    this.simillarity = simillarity;
+  public Result(Float similarity, Dictionary dictionary, Game game, Draw draw) {
+    this.similarity = similarity;
     this.dictionary = dictionary;
     this.game = game;
     this.draw = draw;
