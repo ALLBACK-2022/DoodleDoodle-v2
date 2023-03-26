@@ -46,7 +46,7 @@ public class DictionaryS3ServiceImpl implements DictionaryService {
             for (int i = 0; i < koWords.size(); i++) {
                 String engWord = engWords.get(i);
                 String koWord = koWords.get(i);
-                dictionaries.add(dictionaryMapper.toEntity(koWord, engWord, getImageUrl(engWord), StorageType.LOCAL));
+                dictionaries.add(dictionaryMapper.toEntity(koWord, engWord, getImageUrl(engWord), StorageType.S3));
             }
 
             dictionaryRepository.saveAll(dictionaries);
