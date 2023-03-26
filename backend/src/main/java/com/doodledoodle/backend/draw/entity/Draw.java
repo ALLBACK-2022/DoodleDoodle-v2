@@ -1,7 +1,7 @@
 package com.doodledoodle.backend.draw.entity;
 
 import com.doodledoodle.backend.game.entity.Game;
-import com.doodledoodle.backend.global.entity.BaseEntity;
+import com.doodledoodle.backend.global.audit.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

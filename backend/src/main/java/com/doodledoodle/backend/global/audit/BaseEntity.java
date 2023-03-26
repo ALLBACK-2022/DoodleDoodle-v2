@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.global.entity;
+package com.doodledoodle.backend.global.audit;
 
 import java.time.LocalDateTime;
 import javax.persistence.EntityListeners;
