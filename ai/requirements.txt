@@ -1,0 +1,9 @@
+python-dotenv==0.20.0
+selenium==4.8.0
+confluent-kafka==2.0.2
+faust==1.10.4
+numpy==1.24.2
+Keras==2.12.0
+tensorflow==2.12.0
+scikit-image==0.20.0
+matplotlib==3.7.1
