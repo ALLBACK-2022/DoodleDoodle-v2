@@ -8,6 +8,6 @@ result_schema = faust.Schema(
 )
 
 result_topic = app.topic(
-    'doodledoodle.to.ai.result',
+    'doodledoodle.to.ai.draw',
     schema=result_schema,
 )
