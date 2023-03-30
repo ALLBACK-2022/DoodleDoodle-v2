@@ -10,6 +10,7 @@ async def search(result):
         
         random_word = str(res['randomWord'])
         file = res['file']
+        draw_id = str(res['drawId'])
         
         with open("./ai-model/class_names.txt", "r", encoding="utf8") as file:
             class_names = []
@@ -41,6 +42,7 @@ async def search(result):
                 response[class_names[ind[x]]] = round(pred[ind[x]]*100, 2)
 
         response['result'] = result
+        response['draw_id'] = draw_id
 
         sink = app.topic('doodledoodle.to.backend.result', value_type=dict)
         await sink.send(value=response)
