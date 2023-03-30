@@ -9,7 +9,7 @@ async def search(result):
     async for res in result:
         
         random_word = str(res['randomWord'])
-        file = res['file']
+        image_file = res['file']
         draw_id = str(res['drawId'])
         
         with open("./ai-model/class_names.txt", "r", encoding="utf8") as file:
@@ -19,7 +19,7 @@ async def search(result):
 
         model = keras.models.load_model('./model/keras.h5')
 
-        image = plt.imread(file)
+        image = plt.imread(image_file)
         image = image[:, :, 0]
         image = resize(image, (28, 28))
 
