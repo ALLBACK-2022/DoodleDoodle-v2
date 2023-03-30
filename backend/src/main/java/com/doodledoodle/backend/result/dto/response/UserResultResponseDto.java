@@ -11,5 +11,5 @@ public class UserResultResponseDto {
     private Long drawId;
     private Long drawNo;
     private String imgUrl;
-    private Float Similarity;
+    private Float similarity;
 }
