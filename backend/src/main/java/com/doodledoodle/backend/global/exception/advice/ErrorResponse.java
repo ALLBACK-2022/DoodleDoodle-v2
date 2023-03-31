@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.global.exception;
+package com.doodledoodle.backend.global.exception.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
