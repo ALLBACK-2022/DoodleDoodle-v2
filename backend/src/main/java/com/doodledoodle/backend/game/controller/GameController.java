@@ -3,6 +3,7 @@ package com.doodledoodle.backend.game.controller;
 import com.doodledoodle.backend.game.dto.request.GameRequestDto;
 import com.doodledoodle.backend.game.dto.response.GameResponseDto;
 import com.doodledoodle.backend.game.service.GameService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class GameController {
 
   @PostMapping
   public ResponseEntity<GameResponseDto> createGame(
-      @RequestBody GameRequestDto requestDto) {
+      @Valid @RequestBody GameRequestDto requestDto) {
     return ResponseEntity.ok(gameService.createGame(requestDto));
   }
 
