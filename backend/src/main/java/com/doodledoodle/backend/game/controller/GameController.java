@@ -1,8 +1,8 @@
 package com.doodledoodle.backend.game.controller;
 
 import com.doodledoodle.backend.game.dto.request.GameRequestDto;
-import com.doodledoodle.backend.game.dto.response.GameResponseDto;
 import com.doodledoodle.backend.game.service.GameService;
+import com.doodledoodle.backend.global.IdResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class GameController {
   private final GameService gameService;
 
   @PostMapping
-  public ResponseEntity<GameResponseDto> createGame(
+  public ResponseEntity<IdResponse<Long>> createGame(
       @Valid @RequestBody GameRequestDto requestDto) {
     return ResponseEntity.ok(gameService.createGame(requestDto));
   }

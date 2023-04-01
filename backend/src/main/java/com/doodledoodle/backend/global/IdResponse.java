@@ -1,15 +1,13 @@
-package com.doodledoodle.backend.game.dto.response;
+package com.doodledoodle.backend.global;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameResponseDto {
+public class IdResponse<T> {
 
-  private Long id;
+  private T id;
 }
