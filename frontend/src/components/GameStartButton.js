@@ -1,16 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Minus from '../assets/icons/minus.png';
 import Plus from '../assets/icons/plus.png';
 
+import { createGame } from '../api/Game';
+
 // 인원수 설정 후 Main페이지에서 랜덤단어생성 페이지로 이동
 
-const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const NumURL = `${backBaseUrl}/api/v1/games`;
-
 function GameStartButton() {
-  // console.log(backBaseUrl);
   const [count, setCount] = useState(1);
 
   const navigate = useNavigate();
@@ -23,21 +20,9 @@ function GameStartButton() {
   };
 
   async function start() {
-    const req = {
-      'user-num': count,
-    };
-
-    // console.log(count);
-
-    const heders = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-      'Content-type': 'application/json; charset=UTF-8',
-    };
-    await axios.post(NumURL, req, heders).then(response => {
-      // console.log(response.data);
-      navigate('random', { replace: false, state: { playerNum: count, gameID: response.data } });
+    await createGame(count).then(response => {
+      console.log(response);
+      navigate('random', { replace: false, state: { playerNum: count, gameID: response.data.id } });
     });
   }
 
