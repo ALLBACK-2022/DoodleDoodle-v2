@@ -1,0 +1,31 @@
+version: "3"
+services: 
+  db:
+    image: postgres
+    restart: always
+    container_name: db
+    ports:
+      - "5433:5432"
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    networks:
+      - app-tier
+
+  backend:
+    build:
+      context: ./backend
+    command: gradle bootRun
+    container_name: backend
+    networks:
+      - app-tier
+    depends_on:
+      - db
+      - kafka
+    restart: on-failure
+    tty: true
+
+
+networks:
+  app-tier:
+    driver: bridge
