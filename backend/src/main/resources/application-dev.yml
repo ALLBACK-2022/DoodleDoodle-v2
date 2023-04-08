@@ -7,23 +7,26 @@ spring:
     database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
     generate-ddl: true
+
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
       location: src/main/resources/files
+
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://db:5432/postgres
     username: postgres
     password: 1234
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
     consumer:
       group-id: DoodleDoodle
 
