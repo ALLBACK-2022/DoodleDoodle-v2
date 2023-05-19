@@ -25,13 +25,16 @@ public class Draw extends BaseEntity {
 
   private String doodle;
 
+  private Integer drawNo;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "game_id")
   private Game game;
 
   @Builder
-  public Draw(String doodle, Game game) {
+  public Draw(String doodle, Game game, Integer drawNo) {
     this.doodle = doodle;
     this.game = game;
+    this.drawNo = drawNo;
   }
 }
