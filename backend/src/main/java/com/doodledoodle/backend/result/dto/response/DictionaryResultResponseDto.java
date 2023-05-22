@@ -8,6 +8,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class DictionaryResultResponseDto {
-    private DictionaryDetailsResponseDto dictionary;
+    private Long id;
     private Float similarity;
+    private String name;
+    private String engName;
+    private String imgUrl;
 }
