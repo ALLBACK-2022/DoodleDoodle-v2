@@ -12,7 +12,6 @@ import com.doodledoodle.backend.result.entity.Result;
 import com.doodledoodle.backend.result.mapper.ResultMapper;
 import com.doodledoodle.backend.result.repository.ResultRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class ResultService {
     }
 
     public DrawResultResponseDto getResultByDrawId(Long drawId) {
-        List<Result> results = resultRepository.findByDrawId(drawId, Sort.by(Sort.Direction.DESC, "similarity"));
+        List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
         Draw draw = drawService.loadEntity(drawId);
 
         return new DrawResultResponseDto(
@@ -55,7 +54,7 @@ public class ResultService {
     }
 
     public GameResultResponseDto getResultByGameId(Long gameId) {
-        List<Result> results = resultRepository.findByGameId(gameId, Sort.by(Sort.Direction.DESC, "similarity"));
+        List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
         Game game = gameService.loadEntity(gameId);
 
         return new GameResultResponseDto(
