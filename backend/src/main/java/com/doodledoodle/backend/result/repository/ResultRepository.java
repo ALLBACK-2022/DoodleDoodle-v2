@@ -7,5 +7,5 @@ import java.util.List;
 public interface ResultRepository {
     List<Result> findByDrawIdOrderBySimilarityDesc(Long drawId);
     List<Result> findByGameIdOrderBySimilarityDesc(Long gameId);
-//    List<Result> saveAll(List<Result> results);
+    <S extends Result> List<S> saveAll(Iterable<S> entities);
 }

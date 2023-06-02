@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface DictionaryRepository {
     Optional<Dictionary> findByEngName(String engWord);
-
-//    Optional<Dictionary> findById(Long id);
-
-//    List<Dictionary> saveAll(List<Dictionary> dictionaries);
+    Optional<Dictionary> findById(Long id);
+    <S extends Dictionary> List<S> saveAll(Iterable<S> entities);
 }

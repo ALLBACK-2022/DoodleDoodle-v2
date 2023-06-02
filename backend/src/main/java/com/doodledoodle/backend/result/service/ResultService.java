@@ -10,7 +10,7 @@ import com.doodledoodle.backend.result.dto.response.DrawResultResponseDto;
 import com.doodledoodle.backend.result.dto.response.GameResultResponseDto;
 import com.doodledoodle.backend.result.entity.Result;
 import com.doodledoodle.backend.result.mapper.ResultMapper;
-import com.doodledoodle.backend.result.repository.JpaResultRepository;
+import com.doodledoodle.backend.result.repository.ResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ResultService {
-    private final JpaResultRepository resultRepository;
+    private final ResultRepository resultRepository;
     private final ResultMapper resultMapper;
     private final DrawService drawService;
     private final DictionaryService dictionaryService;

@@ -4,7 +4,7 @@ import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponseDto;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.entity.StorageType;
 import com.doodledoodle.backend.dictionary.mapper.DictionaryMapper;
-import com.doodledoodle.backend.dictionary.repository.JpaDictionaryRepository;
+import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.storage.LocalStorageProperties;
 import com.doodledoodle.backend.global.storage.S3StorageProperties;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DictionaryService implements EntityLoader<Dictionary, Long> {
-    private final JpaDictionaryRepository dictionaryRepository;
+    private final DictionaryRepository dictionaryRepository;
     private final S3StorageProperties s3StorageProperties;
     private final LocalStorageProperties localStorageProperties;
     private final DictionaryMapper dictionaryMapper;
