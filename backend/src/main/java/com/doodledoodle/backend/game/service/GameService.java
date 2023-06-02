@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GameService implements EntityLoader<Game> {
+public class GameService implements EntityLoader<Game, Long> {
 
   private final GameRepository gameRepository;
   private final GameMapper gameMapper;

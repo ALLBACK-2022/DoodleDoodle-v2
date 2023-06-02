@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DictionaryService implements EntityLoader<Dictionary> {
+public class DictionaryService implements EntityLoader<Dictionary, Long> {
     private final DictionaryRepository dictionaryRepository;
     private final S3StorageProperties s3StorageProperties;
     private final LocalStorageProperties localStorageProperties;

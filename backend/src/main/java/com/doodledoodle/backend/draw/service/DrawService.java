@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DrawService implements EntityLoader<Draw> {
+public class DrawService implements EntityLoader<Draw, Long> {
     private final DrawRepository drawRepository;
 
     @Override

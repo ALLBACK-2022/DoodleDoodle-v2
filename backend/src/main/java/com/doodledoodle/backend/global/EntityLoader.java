@@ -1,5 +1,5 @@
 package com.doodledoodle.backend.global;
 
-public interface EntityLoader<T> {
-    T loadEntity(Long id);
+public interface EntityLoader<T, ID> {
+    T loadEntity(ID id);
 }
