@@ -1,8 +1,14 @@
 package com.doodledoodle.backend.dictionary.repository;
 
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface DictionaryRepository extends JpaRepository<Dictionary, Long>, DictionaryQueryRepository {}
+import java.util.List;
+import java.util.Optional;
+
+public interface DictionaryRepository {
+    Optional<Dictionary> findByEngName(String engWord);
+
+//    Optional<Dictionary> findById(Long id);
+
+//    List<Dictionary> saveAll(List<Dictionary> dictionaries);
+}

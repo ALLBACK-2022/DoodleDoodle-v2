@@ -1,8 +1,11 @@
 package com.doodledoodle.backend.result.repository;
 
 import com.doodledoodle.backend.result.entity.Result;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ResultRepository extends JpaRepository<Result, Long>, ResultQueryRepository {}
+import java.util.List;
+
+public interface ResultRepository {
+    List<Result> findByDrawIdOrderBySimilarityDesc(Long drawId);
+    List<Result> findByGameIdOrderBySimilarityDesc(Long gameId);
+//    List<Result> saveAll(List<Result> results);
+}
