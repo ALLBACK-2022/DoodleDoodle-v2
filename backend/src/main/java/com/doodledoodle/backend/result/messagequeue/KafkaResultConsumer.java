@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -23,13 +22,11 @@ public class KafkaResultConsumer {
     @SneakyThrows(JsonProcessingException.class)
     @KafkaListener(topics = "doodledoodle.to.backend.result", containerFactory = "kafkaListenerContainerFactory")
     public void consume(String message) {
-        Map<Object, Object> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
-        map = mapper.readValue(message, new TypeReference<Map<Object, Object>>() {});
+        Map<Object, Object> map = mapper.readValue(message, new TypeReference<>() {});
 
-        if (map.isEmpty()) {
-            return;
-        }
+        if (map.isEmpty()) return;
+
         Long drawId = (Long) map.get("draw_id");
         Map<String, Float> result = (Map<String, Float>) map.get("result");
 
