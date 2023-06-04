@@ -4,7 +4,10 @@ import com.doodledoodle.backend.game.dto.request.GameRequestDto;
 import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.IdResponse;
 import javax.validation.Valid;
+
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/games")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class GameController {
 
-  private final GameService gameService;
+  GameService gameService;
 
   @PostMapping
   public ResponseEntity<IdResponse<Long>> createGame(

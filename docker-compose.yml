@@ -2,10 +2,10 @@ version: "3"
 services: 
   db:
     image: postgres
-    restart: always
+    restart: on-failure
     container_name: db
     ports:
-      - "5433:5432"
+      - 5433:5432
     environment: 
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
@@ -17,6 +17,8 @@ services:
       context: ./backend
     command: gradle bootRun
     container_name: backend
+    ports:  
+      - 8080:8080
     networks:
       - app-tier
     depends_on:

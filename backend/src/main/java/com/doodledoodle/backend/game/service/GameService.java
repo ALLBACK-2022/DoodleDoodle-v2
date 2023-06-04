@@ -7,15 +7,18 @@ import com.doodledoodle.backend.game.repository.GameRepository;
 import com.doodledoodle.backend.global.IdResponse;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.EntityLoader;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class GameService implements EntityLoader<Game, Long> {
 
-  private final GameRepository gameRepository;
-  private final GameMapper gameMapper;
+  GameRepository gameRepository;
+  GameMapper gameMapper;
 
   public IdResponse<Long> createGame(GameRequestDto requestDto) {
     Game game = gameRepository.save(gameMapper.toEntity(requestDto));

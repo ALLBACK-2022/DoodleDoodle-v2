@@ -9,7 +9,9 @@ import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.storage.LocalStorageProperties;
 import com.doodledoodle.backend.global.storage.S3StorageProperties;
 import com.doodledoodle.backend.global.EntityLoader;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,11 +23,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DictionaryService implements EntityLoader<Dictionary, Long> {
-    private final DictionaryRepository dictionaryRepository;
-    private final S3StorageProperties s3StorageProperties;
-    private final LocalStorageProperties localStorageProperties;
-    private final DictionaryMapper dictionaryMapper;
+    DictionaryRepository dictionaryRepository;
+    S3StorageProperties s3StorageProperties;
+    LocalStorageProperties localStorageProperties;
+    DictionaryMapper dictionaryMapper;
 
     public void initializeDictionary() {
         try (

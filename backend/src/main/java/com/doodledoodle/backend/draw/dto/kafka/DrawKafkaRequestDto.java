@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.draw.dto.request;
+package com.doodledoodle.backend.draw.dto.kafka;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
