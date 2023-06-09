@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.draw.messagequeue;
 
-import com.doodledoodle.backend.draw.dto.kafka.DrawKafkaRequestDto;
+import com.doodledoodle.backend.draw.dto.kafka.DrawKafkaRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class KafkaDrawProducer {
     KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void send(DrawKafkaRequestDto request) {
+    public void send(DrawKafkaRequest request) {
         kafkaTemplate.send("doodledoodle.to.ai.draw", "commit", request);
     }
 }

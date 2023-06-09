@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DictionaryResponseDto {
+public class DictionaryResponse {
     private String word;
 }

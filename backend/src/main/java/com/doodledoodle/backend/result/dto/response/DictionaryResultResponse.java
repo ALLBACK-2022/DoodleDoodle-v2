@@ -7,9 +7,10 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserResultResponseDto {
-    private Long drawId;
-    private Integer drawNo;
+public class DictionaryResultResponse {
+    private Long id;
+    private Double similarity;
+    private String name;
+    private String engName;
     private String imgUrl;
-    private Float similarity;
 }

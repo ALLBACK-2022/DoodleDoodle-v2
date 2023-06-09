@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.dictionary.controller;
 
-import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponseDto;
+import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.service.DictionaryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class DictionaryController {
     DictionaryService dictionaryService;
 
     @GetMapping("/random-word")
-    public ResponseEntity<DictionaryResponseDto> getRandomDictionary() {
+    public ResponseEntity<DictionaryResponse> getRandomDictionary() {
         return ResponseEntity.ok(dictionaryService.getRandomDictionary());
     }
 }
