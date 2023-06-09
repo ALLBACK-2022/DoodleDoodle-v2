@@ -12,6 +12,14 @@ spring:
       hibernate:
         format_sql: true
     generate-ddl: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE # snake_case 파싱
 
   servlet:
     multipart:

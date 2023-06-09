@@ -11,9 +11,8 @@ import lombok.*;
 
 @Getter
 @Entity
-@EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Dictionary implements Auditable {
+public class Dictionary{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +29,6 @@ public class Dictionary implements Auditable {
 
   @OneToOne(fetch = FetchType.LAZY)
   private Result result;
-
-  @Setter
-  @Embedded
-  @Column(nullable = false)
-  private BaseTime baseTime;
 
   @Builder
   public Dictionary(String koreanName, String englishName, String imgUrl, Result result) {
