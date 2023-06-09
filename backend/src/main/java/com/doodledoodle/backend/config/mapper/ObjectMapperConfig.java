@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.config;
+package com.doodledoodle.backend.config.mapper;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
