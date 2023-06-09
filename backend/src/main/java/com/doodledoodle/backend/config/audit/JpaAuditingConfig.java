@@ -1,8 +1,8 @@
-package com.doodledoodle.backend.config;
+package com.doodledoodle.backend.config.audit;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing
 @Configuration
+@EnableJpaAuditing
 public class JpaAuditingConfig {}

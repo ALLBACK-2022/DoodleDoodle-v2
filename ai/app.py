@@ -42,7 +42,7 @@ async def search(result):
                 response[class_names[ind[x]]] = round(pred[ind[x]]*100, 2)
 
         response['result'] = result
-        response['draw_id'] = draw_id
+        response['drawId'] = draw_id
 
         sink = app.topic('doodledoodle.to.backend.result', value_type=dict)
         await sink.send(value=response)

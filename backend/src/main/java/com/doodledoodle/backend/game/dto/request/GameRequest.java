@@ -5,13 +5,13 @@ import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameRequestDto {
+public class GameRequest {
 
-  @Max(value = 6, message = "인원수의 범위는 1 ~ 6이여야 합니다.")
-  @Min(value = 1, message = "인원수의 범위는 1 ~ 6이여야 합니다.")
+  @Range(min = 0, max = 6)
   private Integer userNum;
 }

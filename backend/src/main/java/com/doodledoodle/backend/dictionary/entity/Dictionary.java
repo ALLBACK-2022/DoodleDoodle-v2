@@ -1,42 +1,40 @@
 package com.doodledoodle.backend.dictionary.entity;
 
-import com.doodledoodle.backend.global.audit.BaseEntity;
+import com.doodledoodle.backend.global.audit.AuditListener;
+import com.doodledoodle.backend.global.audit.Auditable;
+import com.doodledoodle.backend.global.audit.BaseTime;
 import com.doodledoodle.backend.result.entity.Result;
 
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Dictionary extends BaseEntity {
+public class Dictionary{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name;
+  @Column(unique = true, nullable = false)
+  private String koreanName;
 
-  private String engName;
+  @Column(unique = true, nullable = false)
+  private String englishName;
 
+  @Column(unique = true, nullable = false)
   private String imgUrl;
-
-  @Enumerated(EnumType.STRING)
-  private StorageType storageType;
 
   @OneToOne(fetch = FetchType.LAZY)
   private Result result;
 
   @Builder
-  public Dictionary(String name, String engName, String imgUrl, StorageType storageType, Result result) {
-    this.name = name;
-    this.engName = engName;
+  public Dictionary(String koreanName, String englishName, String imgUrl, Result result) {
+    this.koreanName = koreanName;
+    this.englishName = englishName;
     this.imgUrl = imgUrl;
-    this.storageType = storageType;
     this.result = result;
   }
 }

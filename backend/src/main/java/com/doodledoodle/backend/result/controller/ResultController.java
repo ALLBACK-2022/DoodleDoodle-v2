@@ -1,7 +1,7 @@
 package com.doodledoodle.backend.result.controller;
 
-import com.doodledoodle.backend.result.dto.response.DrawResultResponseDto;
-import com.doodledoodle.backend.result.dto.response.GameResultResponseDto;
+import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
+import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.service.ResultService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class ResultController {
     ResultService resultService;
 
     @GetMapping("/game/{gameId}")
-    public ResponseEntity<GameResultResponseDto> getResultByGameId(@PathVariable Long gameId) {
+    public ResponseEntity<GameResultResponse> getResultByGameId(@PathVariable Long gameId) {
         return ResponseEntity.ok(resultService.getResultByGameId(gameId));
     }
 
     @GetMapping("/draw/{drawId}")
-    public ResponseEntity<DrawResultResponseDto> getResultByDrawId(@PathVariable Long drawId) {
+    public ResponseEntity<DrawResultResponse> getResultByDrawId(@PathVariable Long drawId) {
         return ResponseEntity.ok(resultService.getResultByDrawId(drawId));
     }
 }

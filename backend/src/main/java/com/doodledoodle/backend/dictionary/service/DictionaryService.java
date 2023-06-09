@@ -1,73 +1,36 @@
 package com.doodledoodle.backend.dictionary.service;
 
-import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponseDto;
+import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
-import com.doodledoodle.backend.dictionary.entity.StorageType;
 import com.doodledoodle.backend.dictionary.mapper.DictionaryMapper;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
-import com.doodledoodle.backend.global.storage.LocalStorageProperties;
-import com.doodledoodle.backend.global.storage.S3StorageProperties;
 import com.doodledoodle.backend.global.EntityLoader;
+import com.doodledoodle.backend.result.entity.DictionaryMap;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DictionaryService implements EntityLoader<Dictionary, Long> {
     DictionaryRepository dictionaryRepository;
-    S3StorageProperties s3StorageProperties;
-    LocalStorageProperties localStorageProperties;
     DictionaryMapper dictionaryMapper;
 
-    public void initializeDictionary() {
-        try (
-                BufferedReader engReader = new BufferedReader(new FileReader(localStorageProperties.getLocation() + "/engclasses.txt"));
-                BufferedReader koReader = new BufferedReader(new FileReader(localStorageProperties.getLocation() + "/classes.txt"))) {
-
-            String koLine;
-            String engLine;
-            List<String> koWords = new ArrayList<>();
-            List<String> engWords = new ArrayList<>();
-            List<Dictionary> dictionaries = new ArrayList<>();
-
-            while (StringUtils.hasText(engLine = engReader.readLine()) && StringUtils.hasText(koLine = koReader.readLine())) {
-                engWords.add(engLine);
-                koWords.add(koLine);
-            }
-
-            for (int i = 0; i < koWords.size(); i++) {
-                String engWord = engWords.get(i);
-                String koWord = koWords.get(i);
-                dictionaries.add(dictionaryMapper.toEntity(koWord, engWord, getImageUrl(engWord), StorageType.S3));
-            }
-
-            dictionaryRepository.saveAll(dictionaries);
-        } catch (IOException e) {}
-    }
-
-    public DictionaryResponseDto getRandomDictionary() {
+    public DictionaryResponse getRandomDictionary() {
         long randomNum = (long) (Math.random() * 99) + 1;
         return dictionaryMapper.toResponse(loadEntity(randomNum));
     }
 
-    public Dictionary getEntityByEngName(String engName) {
-        return dictionaryRepository.findByEngName(engName)
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    private String getImageUrl(String engWord) {
-        return s3StorageProperties.getUri() + "image/" +  engWord + ".png";
+    public DictionaryMap getEntityListByEngName(Set<String> engNameList) {
+        return new DictionaryMap(dictionaryRepository.findAllByEnglishNameIn(engNameList)
+                .stream().collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity())));
     }
 
     @Override

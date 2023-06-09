@@ -9,8 +9,8 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-public class DrawResultResponseDto {
+public class DrawResultResponse {
     private String doodle;
-    private DictionaryResultResponseDto randomWord;
-    private List<DictionaryResultResponseDto> topFive;
+    private DictionaryResultResponse randomWord;
+    private List<DictionaryResultResponse> topFive;
 }

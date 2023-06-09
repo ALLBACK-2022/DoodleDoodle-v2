@@ -1,35 +1,38 @@
 package com.doodledoodle.backend.draw.entity;
 
 import com.doodledoodle.backend.game.entity.Game;
-import com.doodledoodle.backend.global.audit.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.doodledoodle.backend.global.audit.AuditListener;
+import com.doodledoodle.backend.global.audit.Auditable;
+
+import javax.persistence.*;
+
+import com.doodledoodle.backend.global.audit.BaseTime;
+import lombok.*;
 
 @Getter
 @Entity
+@EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Draw extends BaseEntity {
+public class Draw implements Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String doodle;
 
+  @Column(nullable = false)
   private Integer drawNo;
 
+  @JoinColumn
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "game_id")
   private Game game;
+
+  @Setter
+  @Embedded
+  @Column(nullable = false)
+  private BaseTime baseTime;
 
   @Builder
   public Draw(String doodle, Game game, Integer drawNo) {

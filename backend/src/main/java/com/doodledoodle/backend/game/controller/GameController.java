@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.game.controller;
 
-import com.doodledoodle.backend.game.dto.request.GameRequestDto;
+import com.doodledoodle.backend.game.dto.request.GameRequest;
 import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.IdResponse;
 import javax.validation.Valid;
@@ -24,8 +24,7 @@ public class GameController {
 
   @PostMapping
   public ResponseEntity<IdResponse<Long>> createGame(
-      @Valid @RequestBody GameRequestDto requestDto) {
+      @Valid @RequestBody GameRequest requestDto) {
     return ResponseEntity.ok(gameService.createGame(requestDto));
   }
-
 }

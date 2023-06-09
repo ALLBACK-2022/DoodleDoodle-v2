@@ -1,19 +1,18 @@
 package com.doodledoodle.backend.game.entity;
 
-import com.doodledoodle.backend.global.audit.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.doodledoodle.backend.global.audit.AuditListener;
+
+import javax.persistence.*;
+
+import com.doodledoodle.backend.global.audit.Auditable;
+import com.doodledoodle.backend.global.audit.BaseTime;
+import lombok.*;
 
 @Getter
 @Entity
+@EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Game extends BaseEntity {
+public class Game implements Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -21,7 +20,13 @@ public class Game extends BaseEntity {
 
   private String randomWord;
 
+  @Column(nullable = false)
   private Integer playerNum;
+
+  @Setter
+  @Embedded
+  @Column(nullable = false)
+  private BaseTime baseTime;
 
   @Builder
   public Game(String randomWord, Integer playerNum) {

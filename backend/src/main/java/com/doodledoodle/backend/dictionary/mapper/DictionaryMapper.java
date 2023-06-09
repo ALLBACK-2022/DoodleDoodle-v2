@@ -1,24 +1,22 @@
 package com.doodledoodle.backend.dictionary.mapper;
 
-import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponseDto;
+import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
-import com.doodledoodle.backend.dictionary.entity.StorageType;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DictionaryMapper {
-    public Dictionary toEntity(String koWord, String engWord, String imgUrl, StorageType storageType) {
+    public Dictionary toEntity(String koreanName, String englishName, String imgUrl) {
         return Dictionary.builder()
-                .name(koWord)
-                .engName(engWord)
+                .koreanName(koreanName)
+                .englishName(englishName)
                 .imgUrl(imgUrl)
-                .storageType(storageType)
                 .build();
     }
 
-    public DictionaryResponseDto toResponse(Dictionary entity) {
-        return DictionaryResponseDto.builder()
-                .word(entity.getEngName())
+    public DictionaryResponse toResponse(Dictionary entity) {
+        return DictionaryResponse.builder()
+                .word(entity.getKoreanName())
                 .build();
     }
 }

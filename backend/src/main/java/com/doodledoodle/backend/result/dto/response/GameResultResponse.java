@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 @AllArgsConstructor
-public class DictionaryResultResponseDto {
-    private Long id;
-    private Float similarity;
-    private String name;
-    private String engName;
-    private String imgUrl;
+public class GameResultResponse {
+    private String randomWord;
+    private List<UserResultResponse> users;
 }
