@@ -6,17 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DictionaryMapper {
-    public Dictionary toEntity(String koreanName, String englishName, String imgUrl) {
-        return Dictionary.builder()
-                .koreanName(koreanName)
-                .englishName(englishName)
-                .imgUrl(imgUrl)
-                .build();
-    }
-
-    public DictionaryResponse toResponse(Dictionary entity) {
+    public DictionaryResponse toResponse(final Dictionary dictionary) {
         return DictionaryResponse.builder()
-                .word(entity.getKoreanName())
+                .word(dictionary.getKoreanName())
                 .build();
     }
 }

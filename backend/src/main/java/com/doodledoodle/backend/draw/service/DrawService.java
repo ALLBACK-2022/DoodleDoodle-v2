@@ -16,7 +16,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
     DrawRepository drawRepository;
 
     @Override
-    public Draw loadEntity(Long id) {
+    public Draw loadEntity(final Long id) {
         return drawRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }

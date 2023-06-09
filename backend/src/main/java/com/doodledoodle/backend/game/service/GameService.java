@@ -19,13 +19,13 @@ public class GameService implements EntityLoader<Game, Long> {
   GameRepository gameRepository;
   GameMapper gameMapper;
 
-  public IdResponse<Long> createGame(GameRequest requestDto) {
+  public IdResponse<Long> createGame(final GameRequest requestDto) {
     Game game = gameRepository.save(gameMapper.toEntity(requestDto));
     return new IdResponse<>(game.getId());
   }
 
   @Override
-  public Game loadEntity(Long id) {
+  public Game loadEntity(final Long id) {
     return gameRepository.findById(id)
             .orElseThrow(EntityNotFoundException::new);
   }
