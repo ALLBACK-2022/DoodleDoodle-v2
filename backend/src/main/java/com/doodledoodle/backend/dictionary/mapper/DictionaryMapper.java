@@ -16,7 +16,7 @@ public class DictionaryMapper {
 
     public DictionaryResponse toResponse(Dictionary entity) {
         return DictionaryResponse.builder()
-                .word(entity.getEnglishName())
+                .word(entity.getKoreanName())
                 .build();
     }
 }
