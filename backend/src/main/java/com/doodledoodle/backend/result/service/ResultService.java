@@ -32,7 +32,7 @@ public class ResultService implements EntityLoader<Result, Long> {
     DictionaryService dictionaryService;
     GameService gameService;
 
-    public void saveResults(ResultKafkaResponse resultKafkaResponse) {
+    public void saveResults(final ResultKafkaResponse resultKafkaResponse) {
         Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
         SimilarityMap similarityMap = new SimilarityMap(resultKafkaResponse.getResult());
 
@@ -42,14 +42,14 @@ public class ResultService implements EntityLoader<Result, Long> {
         resultRepository.saveAll(results);
     }
 
-    public DrawResultResponse getResultByDrawId(Long drawId) {
+    public DrawResultResponse getResultByDrawId(final Long drawId) {
         List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
         Draw draw = drawService.loadEntity(drawId);
 
         return resultMapper.toDrawResultResponse(draw, results);
     }
 
-    public GameResultResponse getResultByGameId(Long gameId) {
+    public GameResultResponse getResultByGameId(final Long gameId) {
         List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
         Game game = gameService.loadEntity(gameId);
 
@@ -57,7 +57,7 @@ public class ResultService implements EntityLoader<Result, Long> {
     }
 
     @Override
-    public Result loadEntity(Long id) {
+    public Result loadEntity(final Long id) {
         return resultRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }

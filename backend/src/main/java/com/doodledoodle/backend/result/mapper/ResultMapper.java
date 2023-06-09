@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ResultMapper {
-    public Result toEntity(Double similarity, Draw draw, Dictionary dictionary, Game game) {
+    public Result toEntity(final Double similarity, final Draw draw, final Dictionary dictionary, final Game game) {
         return Result.builder()
                 .similarity(similarity)
                 .draw(draw)
@@ -26,7 +26,7 @@ public class ResultMapper {
                 .build();
     }
 
-    public List<Result> toEntityList(SimilarityMap similarityMap, Draw draw, Game game, DictionaryMap dictionaryMap) {
+    public List<Result> toEntityList(final SimilarityMap similarityMap, final Draw draw, final Game game, final DictionaryMap dictionaryMap) {
         return similarityMap.getKeySet().stream()
                 .map(key -> toEntity(similarityMap.getSimilarityByKey(key),
                                     draw,
@@ -35,7 +35,7 @@ public class ResultMapper {
                 .collect(Collectors.toList());
     }
 
-    public DictionaryResultResponse toDictionaryResultResponse(Result result) {
+    public DictionaryResultResponse toDictionaryResultResponse(final Result result) {
         Dictionary dictionary = result.getDictionary();
         return DictionaryResultResponse.builder()
                 .id(result.getId())
@@ -46,7 +46,7 @@ public class ResultMapper {
                 .build();
     }
 
-    public UserResultResponse toUserResultResponse(Result result) {
+    public UserResultResponse toUserResultResponse(final Result result) {
         Draw draw = result.getDraw();
         return UserResultResponse.builder()
                 .drawId(draw.getId())
@@ -56,7 +56,7 @@ public class ResultMapper {
                 .build();
     }
 
-    public DrawResultResponse toDrawResultResponse(Draw draw, List<Result> results) {
+    public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
         return DrawResultResponse.builder()
                 .doodle(draw.getDoodle())
                 .randomWord(toDictionaryResultResponse(results.get(0)))
@@ -64,18 +64,18 @@ public class ResultMapper {
                 .build();
     }
 
-    public GameResultResponse toGameResultResponse(Game game, List<Result> results) {
+    public GameResultResponse toGameResultResponse(final Game game, final List<Result> results) {
         return GameResultResponse.builder()
                 .randomWord(game.getRandomWord())
                 .users(toUserResultResponseDtoList(results))
                 .build();
     }
 
-    private List<UserResultResponse> toUserResultResponseDtoList(List<Result> results) {
+    private List<UserResultResponse> toUserResultResponseDtoList(final List<Result> results) {
         return results.stream().map(this::toUserResultResponse).collect(Collectors.toList());
     }
 
-    private List<DictionaryResultResponse> toTopFive(List<Result> results) {
+    private List<DictionaryResultResponse> toTopFive(final List<Result> results) {
         return List.of(
                 toDictionaryResultResponse(results.get(1)),
                 toDictionaryResultResponse(results.get(2)),

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameMapper {
 
-  public Game toEntity(GameRequest requestDto) {
+  public Game toEntity(final GameRequest request) {
     return Game.builder()
-        .playerNum(requestDto.getUserNum())
+        .playerNum(request.getUserNum())
         .build();
   }
 }

@@ -28,13 +28,13 @@ public class DictionaryService implements EntityLoader<Dictionary, Long> {
         return dictionaryMapper.toResponse(loadEntity(randomNum));
     }
 
-    public DictionaryMap getEntityListByEngName(Set<String> engNameList) {
+    public DictionaryMap getEntityListByEngName(final Set<String> engNameList) {
         return new DictionaryMap(dictionaryRepository.findAllByEnglishNameIn(engNameList)
                 .stream().collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity())));
     }
 
     @Override
-    public Dictionary loadEntity(Long id) {
+    public Dictionary loadEntity(final Long id) {
         return dictionaryRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
