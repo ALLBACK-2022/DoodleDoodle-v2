@@ -7,10 +7,12 @@ import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.EntityLoader;
 import com.doodledoodle.backend.result.entity.DictionaryMap;
+import com.doodledoodle.backend.util.RandomGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -18,17 +20,18 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DictionaryService implements EntityLoader<Dictionary, Long> {
     DictionaryRepository dictionaryRepository;
     DictionaryMapper dictionaryMapper;
+    RandomGenerator randomGenerator;
 
     public DictionaryResponse getRandomDictionary() {
-        long randomNum = (long) (Math.random() * 99) + 1;
-        return dictionaryMapper.toResponse(loadEntity(randomNum));
+        return dictionaryMapper.toResponse(loadEntity(randomGenerator.generateRandom()));
     }
 
-    public DictionaryMap getEntityListByEngName(final Set<String> engNameList) {
+    public DictionaryMap getDictionaryMapByEngNames(final Set<String> engNameList) {
         return new DictionaryMap(dictionaryRepository.findAllByEnglishNameIn(engNameList)
                 .stream().collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity())));
     }

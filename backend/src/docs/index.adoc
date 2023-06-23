@@ -1,0 +1,11 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+= DoodleDoodle v2 API
+
+include::dictionary.adoc[]
+include::result.adoc[]

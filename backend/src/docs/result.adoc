@@ -1,0 +1,14 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Result
+=== draw id로 결과 조회(개인)
+operation::get result by draw id[snippets='http-request,http-response']
+
+=== game id로 결과 조회(다인)
+operation::get result by game id[snippets='http-request,http-response']
+
+
