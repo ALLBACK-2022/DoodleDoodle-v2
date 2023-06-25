@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class DictionaryResponse {
     private String word;

@@ -1,0 +1,9 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Dictionary
+=== 랜덤 단어 조회
+operation::get random dictionary word[snippets='http-request,http-response']

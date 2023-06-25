@@ -19,11 +19,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ResultService implements EntityLoader<Result, Long> {
     ResultRepository resultRepository;
@@ -36,7 +38,7 @@ public class ResultService implements EntityLoader<Result, Long> {
         Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
         SimilarityMap similarityMap = new SimilarityMap(resultKafkaResponse.getResult());
 
-        DictionaryMap dictionaries = dictionaryService.getEntityListByEngName(similarityMap.getKeySet());
+        DictionaryMap dictionaries = dictionaryService.getDictionaryMapByEngNames(similarityMap.getKeySet());
         List<Result> results = resultMapper.toEntityList(similarityMap, draw, draw.getGame(), dictionaries);
 
         resultRepository.saveAll(results);
