@@ -1,7 +1,6 @@
 package com.doodledoodle.backend.game.repository;
 
 import com.doodledoodle.backend.game.entity.Game;
-
 import java.util.Optional;
 
 public interface GameRepository {

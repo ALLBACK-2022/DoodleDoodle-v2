@@ -33,4 +33,9 @@ public class Game implements Auditable {
     this.randomWord = randomWord;
     this.playerNum = playerNum;
   }
+
+  public void update(Long id,String randomWord){
+    this.id = id;
+    this.randomWord = randomWord;
+  }
 }

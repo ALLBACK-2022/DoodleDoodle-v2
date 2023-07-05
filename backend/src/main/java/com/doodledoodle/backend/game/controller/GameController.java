@@ -1,10 +1,11 @@
 package com.doodledoodle.backend.game.controller;
 
 import com.doodledoodle.backend.game.dto.request.GameRequest;
+import com.doodledoodle.backend.game.dto.request.GameWordRequest;
+import com.doodledoodle.backend.game.dto.response.GameWordResponse;
 import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.IdResponse;
 import javax.validation.Valid;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,5 +27,11 @@ public class GameController {
   public ResponseEntity<IdResponse<Long>> createGame(
       @Valid @RequestBody GameRequest requestDto) {
     return ResponseEntity.ok(gameService.createGame(requestDto));
+  }
+
+  @PostMapping("randwords")
+  public ResponseEntity<GameWordResponse> saveWord(
+      @Valid @RequestBody GameWordRequest requestDto) {
+    return ResponseEntity.ok(gameService.setWord(requestDto));
   }
 }
