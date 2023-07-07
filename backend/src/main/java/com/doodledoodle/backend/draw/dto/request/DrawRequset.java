@@ -6,9 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @AllArgsConstructor
-public class NewDrawRequset {
+public class DrawRequset {
 
-  Long gameId;
-  Integer drawNo;
-  MultipartFile fileName;
+  private Long gameId;
+  private Integer drawNo;
+  private MultipartFile fileName;
 }

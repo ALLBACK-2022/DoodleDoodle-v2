@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.doodledoodle.backend.draw.dto.request.NewDrawRequset;
+import com.doodledoodle.backend.draw.dto.request.DrawRequset;
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.draw.mapper.DrawMapper;
@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +35,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
     AmazonS3Client amazonS3Client;
 
 
-    public DrawResponse saveDraw(final NewDrawRequset request) {
-        log.info("################################");
-        log.info(request.getGameId().toString());
-        log.info("################################");
+    public DrawResponse saveDraw(final DrawRequset request) {
         Game game = gameRepository.findById(request.getGameId())
             .orElseThrow(EntityNotFoundException::new);
         Draw draw = drawRepository.save(drawMapper.toEntity(request, game));
@@ -57,9 +53,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
                     request.getFileName().getInputStream(),
                     data)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
-            String downloadUri =
-                ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .toUriString();
+            String downloadUri = "https://test-bucket-doodle.s3.ap-northeast-2.amazonaws.com/drawimage/"+ draw.getId() + ".png";
             draw.update(draw.getId(), downloadUri);
             drawRepository.save(draw);
         } catch (IOException e){

@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.draw.controller;
 
-import com.doodledoodle.backend.draw.dto.request.NewDrawRequset;
+import com.doodledoodle.backend.draw.dto.request.DrawRequset;
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.service.DrawService;
 import lombok.AccessLevel;
@@ -20,23 +20,9 @@ public class DrawController {
 
   DrawService drawService;
 
-//  @PostMapping
-//  public ResponseEntity<DrawResponse> saveDraw(
-//      @Valid @RequestPart DrawRequest drawRequest,
-//      @Valid @RequestPart(value="image", required = false) MultipartFile fileName) {
-//    return ResponseEntity.ok(drawService.saveDraw(drawRequest, fileName));
-//  }
   @PostMapping
   public ResponseEntity<DrawResponse> saveDraw(
-      @ModelAttribute NewDrawRequset newDrawRequset) {
-    return ResponseEntity.ok(drawService.saveDraw(newDrawRequset));
-  }
-  @PostMapping("/123")
-  public String test(
-      @ModelAttribute NewDrawRequset newDrawRequset) {
-    System.out.println("DrawNo" + newDrawRequset.getDrawNo());
-    System.out.println("GameId" + newDrawRequset.getGameId());
-    System.out.println("file" + newDrawRequset.getFileName());
-    return "test";
+      @ModelAttribute DrawRequset requset) {
+    return ResponseEntity.ok(drawService.saveDraw(requset));
   }
 }
