@@ -8,6 +8,7 @@ import com.doodledoodle.backend.draw.dto.request.DrawRequest;
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.draw.mapper.DrawMapper;
+import com.doodledoodle.backend.draw.messagequeue.KafkaDrawProducer;
 import com.doodledoodle.backend.draw.repository.DrawRepository;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.game.service.GameService;
@@ -31,6 +32,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
   GameService gameService;
   DrawMapper drawMapper;
   S3StorageProperties s3StorageProperties;
+  KafkaDrawProducer kafkaDrawProducer;
   AmazonS3Client amazonS3Client;
 
 
@@ -41,6 +43,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
         .split("\\.");
     String fileType = splitFilename[splitFilename.length - 1];
     String fileName = "drawimage/" + draw.getId().toString() + "." + fileType;
+    kafkaDrawProducer.send(drawMapper.toDto(draw,game,request));
     ObjectMetadata data = new ObjectMetadata();
     data.setContentType(fileName);
     data.setContentLength(request.getFileName().getSize());

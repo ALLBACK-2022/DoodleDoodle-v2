@@ -35,7 +35,7 @@ public class GameService implements EntityLoader<Game, Long> {
     Dictionary dictionary = dictionaryService.getDictionary(gameWordRequest.getName());
     game.update(dictionary.getEnglishName());
     gameRepository.save(game);
-    return gameMapper.toResponse(loadEntity(game.getId()));
+    return gameMapper.toResponse(game);
   }
 
   @Override

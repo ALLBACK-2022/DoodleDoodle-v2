@@ -1,5 +1,6 @@
 package com.doodledoodle.backend.draw.mapper;
 
+import com.doodledoodle.backend.draw.dto.kafka.DrawKafkaRequest;
 import com.doodledoodle.backend.draw.dto.request.DrawRequest;
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.entity.Draw;
@@ -19,6 +20,14 @@ public class DrawMapper {
   public DrawResponse toResponse(final Draw draw){
     return DrawResponse.builder()
         .drawId(draw.getId())
+        .build();
+  }
+
+  public DrawKafkaRequest toDto(final Draw draw, final Game game, DrawRequest request){
+    return DrawKafkaRequest.builder()
+        .drawId(draw.getId())
+        .randomWord(game.getRandomWord())
+        .file(request.getFileName())
         .build();
   }
 }
