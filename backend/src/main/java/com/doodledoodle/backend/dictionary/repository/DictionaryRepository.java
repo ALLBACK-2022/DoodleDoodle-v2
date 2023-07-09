@@ -10,4 +10,5 @@ public interface DictionaryRepository {
     List<Dictionary> findAllByEnglishNameIn(Set<String> englishNames);
     Optional<Dictionary> findById(Long id);
     <S extends Dictionary> List<S> saveAll(Iterable<S> entities);
+    Optional<Dictionary> findByKoreanName(String koreanName);
 }

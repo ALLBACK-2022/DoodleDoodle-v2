@@ -13,6 +13,8 @@ services:
       - app-tier
 
   backend:
+    env_file:
+      .env
     build:
       context: ./backend
     command: gradle bootRun

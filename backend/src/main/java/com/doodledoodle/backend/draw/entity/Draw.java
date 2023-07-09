@@ -19,7 +19,6 @@ public class Draw implements Auditable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
   private String doodle;
 
   @Column(nullable = false)
@@ -39,5 +38,9 @@ public class Draw implements Auditable {
     this.doodle = doodle;
     this.game = game;
     this.drawNo = drawNo;
+  }
+
+  public void update(String doodle){
+    this.doodle = doodle;
   }
 }

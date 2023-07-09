@@ -36,6 +36,10 @@ public class DictionaryService implements EntityLoader<Dictionary, Long> {
                 .stream().collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity())));
     }
 
+    public Dictionary getDictionary(final String korenName){
+        return dictionaryRepository.findByKoreanName(korenName).orElseThrow((EntityNotFoundException::new));
+    }
+
     @Override
     public Dictionary loadEntity(final Long id) {
         return dictionaryRepository.findById(id)

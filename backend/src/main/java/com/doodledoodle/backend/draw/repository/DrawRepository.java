@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface DrawRepository {
     Optional<Draw> findById(Long id);
+
+    Draw save(Draw draw);
 }
