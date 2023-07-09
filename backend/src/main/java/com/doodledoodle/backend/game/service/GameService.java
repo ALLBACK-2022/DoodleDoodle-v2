@@ -37,7 +37,7 @@ public class GameService implements EntityLoader<Game, Long> {
         .orElseThrow(EntityNotFoundException::new);
     game.update(game.getId(),dictionary.getEnglishName());
     gameRepository.save(game);
-    return gameMapper.toResponse(game);
+    return gameMapper.toResponse(loadEntity(game.getId()));
   }
 
   @Override

@@ -1,6 +1,6 @@
 package com.doodledoodle.backend.draw.controller;
 
-import com.doodledoodle.backend.draw.dto.request.DrawRequset;
+import com.doodledoodle.backend.draw.dto.request.DrawRequest;
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.service.DrawService;
 import lombok.AccessLevel;
@@ -22,7 +22,7 @@ public class DrawController {
 
   @PostMapping
   public ResponseEntity<DrawResponse> saveDraw(
-      @ModelAttribute DrawRequset requset) {
+      @ModelAttribute DrawRequest requset) {
     return ResponseEntity.ok(drawService.saveDraw(requset));
   }
 }
