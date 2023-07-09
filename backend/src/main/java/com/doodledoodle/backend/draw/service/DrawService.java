@@ -10,7 +10,7 @@ import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.draw.mapper.DrawMapper;
 import com.doodledoodle.backend.draw.repository.DrawRepository;
 import com.doodledoodle.backend.game.entity.Game;
-import com.doodledoodle.backend.game.repository.GameRepository;
+import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.EntityLoader;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.exception.FileStorageException;
@@ -28,15 +28,14 @@ import org.springframework.stereotype.Service;
 public class DrawService implements EntityLoader<Draw, Long> {
 
   DrawRepository drawRepository;
-  GameRepository gameRepository;
+  GameService gameService;
   DrawMapper drawMapper;
   S3StorageProperties s3StorageProperties;
   AmazonS3Client amazonS3Client;
 
 
   public DrawResponse saveDraw(final DrawRequest request) {
-    Game game = gameRepository.findById(request.getGameId())
-        .orElseThrow(EntityNotFoundException::new);
+    Game game = gameService.loadEntity(request.getGameId());
     Draw draw = drawRepository.save(drawMapper.toEntity(request, game));
     String[] splitFilename = Objects.requireNonNull(request.getFileName().getOriginalFilename())
         .split("\\.");
