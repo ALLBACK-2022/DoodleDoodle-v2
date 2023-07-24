@@ -4,9 +4,9 @@ import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.mapper.DictionaryMapper;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
-import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.EntityLoader;
-import com.doodledoodle.backend.result.entity.DictionaryMap;
+import com.doodledoodle.backend.global.exception.EntityNotFoundException;
+import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.util.RandomGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +31,13 @@ public class DictionaryService implements EntityLoader<Dictionary, Long> {
         return dictionaryMapper.toResponse(loadEntity(randomGenerator.generateRandom()));
     }
 
-    public DictionaryMap getDictionaryMapByEngNames(final Set<String> engNameList) {
+    public DictionaryMap getDictionaryMapByEnglishNames(final Set<String> engNameList) {
         return new DictionaryMap(dictionaryRepository.findAllByEnglishNameIn(engNameList)
                 .stream().collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity())));
+    }
+
+    public Dictionary getDictionary(final String korenName) {
+        return dictionaryRepository.findByKoreanName(korenName).orElseThrow((EntityNotFoundException::new));
     }
 
     @Override

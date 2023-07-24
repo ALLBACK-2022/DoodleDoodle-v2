@@ -3,7 +3,7 @@ package com.doodledoodle.backend.dictionary.service;
 import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
-import com.doodledoodle.backend.result.entity.DictionaryMap;
+import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.support.database.DatabaseTest;
 import com.doodledoodle.backend.util.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Random;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,19 +35,19 @@ class DictionaryServiceTest {
 
         //then
         Dictionary dictionary = dictionaryRepository.findById(randomNum).get();
-        assertThat(dictionaryResponse.getWord()).isEqualTo(dictionary.getKoreanName());
+        assertThat(dictionaryResponse.getKoreanName()).isEqualTo(dictionary.getKoreanName());
     }
 
     @Test
     @DisplayName("영어 단어들로 조회가 수행되는가")
-    void getEntityListByEngName() {
+    void getEntityListByEnglishName() {
         //given
         String skateboard = "skateboard";
         String fish = "fish";
         Set<String> engNames = Set.of(skateboard, fish);
 
         //when
-        DictionaryMap dictionaryMap = dictionaryService.getDictionaryMapByEngNames(engNames);
+        DictionaryMap dictionaryMap = dictionaryService.getDictionaryMapByEnglishNames(engNames);
 
 
         //then

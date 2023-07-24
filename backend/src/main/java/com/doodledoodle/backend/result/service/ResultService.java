@@ -7,12 +7,12 @@ import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.EntityLoader;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
+import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
+import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
 import com.doodledoodle.backend.result.dto.kafka.ResultKafkaResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
-import com.doodledoodle.backend.result.entity.DictionaryMap;
 import com.doodledoodle.backend.result.entity.Result;
-import com.doodledoodle.backend.result.entity.SimilarityMap;
 import com.doodledoodle.backend.result.mapper.ResultMapper;
 import com.doodledoodle.backend.result.repository.ResultRepository;
 import lombok.AccessLevel;
@@ -37,17 +37,24 @@ public class ResultService implements EntityLoader<Result, Long> {
     public void saveResults(final ResultKafkaResponse resultKafkaResponse) {
         Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
         SimilarityMap similarityMap = new SimilarityMap(resultKafkaResponse.getResult());
+        SimilarityMap topFiveSimilarityMap = new SimilarityMap(resultKafkaResponse.getTopFive());
 
-        DictionaryMap dictionaries = dictionaryService.getDictionaryMapByEngNames(similarityMap.getKeySet());
+        saveAllBySimilarityMap(draw, similarityMap);
+        saveAllBySimilarityMap(draw, topFiveSimilarityMap);
+    }
+
+    private void saveAllBySimilarityMap(final Draw draw, final SimilarityMap similarityMap) {
+        DictionaryMap dictionaries = dictionaryService.getDictionaryMapByEnglishNames(similarityMap.getKeySet());
         List<Result> results = resultMapper.toEntityList(similarityMap, draw, draw.getGame(), dictionaries);
-
         resultRepository.saveAll(results);
     }
 
     public DrawResultResponse getResultByDrawId(final Long drawId) {
         List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
         Draw draw = drawService.loadEntity(drawId);
-
+        if (results.isEmpty()) {
+            return resultMapper.toEmptyDrawResponse();
+        }
         return resultMapper.toDrawResultResponse(draw, results);
     }
 

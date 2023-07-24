@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.draw.dto.response;
+package com.doodledoodle.backend.game.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class DrawResponse {
-    private Long drawId;
+public class GameWordResponse {
+    private String englishName;
 }

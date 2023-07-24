@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.result.entity;
+package com.doodledoodle.backend.result.dto.collection;
 
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import lombok.AllArgsConstructor;

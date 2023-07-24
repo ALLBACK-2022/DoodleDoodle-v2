@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DictionaryController {
     DictionaryService dictionaryService;
 
-    @GetMapping("/random-word")
+    @GetMapping("/random-words")
     public ResponseEntity<DictionaryResponse> getRandomDictionary() {
         return ResponseEntity.ok(dictionaryService.getRandomDictionary());
     }

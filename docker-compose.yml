@@ -13,6 +13,8 @@ services:
       - app-tier
 
   backend:
+    env_file:
+      .env
     build:
       context: ./backend
     command: gradle bootRun
@@ -69,6 +71,18 @@ services:
       SERVER_SERVLET_CONTEXTPATH: /
     depends_on:
       - kafka
+    networks:
+      - app-tier
+    tty: true
+
+  ai:
+    build:
+      context: ./ai
+    container_name: ai
+    restart: on-failure
+    depends_on:
+      - kafka
+      - backend
     networks:
       - app-tier
     tty: true

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class DictionaryMapper {
     public DictionaryResponse toResponse(final Dictionary dictionary) {
         return DictionaryResponse.builder()
-                .word(dictionary.getKoreanName())
+                .koreanName(dictionary.getKoreanName())
                 .build();
     }
 }

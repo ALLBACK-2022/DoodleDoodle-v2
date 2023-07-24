@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UserResultResponse {
     private Long drawId;
-    private Integer drawNo;
-    private String imgUrl;
+    private Integer playerNo;
+    private String imageUrl;
     private Double similarity;
 }

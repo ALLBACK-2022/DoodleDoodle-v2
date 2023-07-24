@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class DrawResultResponse {
-    private String doodle;
+    private String imageUrl;
     private DictionaryResultResponse randomWord;
     private List<DictionaryResultResponse> topFive;
 }
