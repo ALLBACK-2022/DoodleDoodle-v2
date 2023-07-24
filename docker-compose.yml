@@ -75,6 +75,19 @@ services:
       - app-tier
     tty: true
 
+  ai:
+    build:
+      context: ./ai
+    # image: chokeong1/doodle-ai
+    container_name: doodle-ai
+    restart: on-failure
+    depends_on:
+      - kafka
+      - backend
+    networks:
+      - app-tier
+    tty: true
+
 networks:
   app-tier:
     driver: bridge
