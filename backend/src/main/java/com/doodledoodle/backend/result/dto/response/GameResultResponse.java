@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class GameResultResponse {
     private String randomWord;
-    private List<UserResultResponse> users;
+    private List<UserResultResponse> results;
 }

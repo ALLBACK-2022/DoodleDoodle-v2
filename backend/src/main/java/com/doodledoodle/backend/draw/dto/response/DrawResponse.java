@@ -8,5 +8,5 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class DrawResponse {
-  private Long drawId;
+    private Long drawId;
 }

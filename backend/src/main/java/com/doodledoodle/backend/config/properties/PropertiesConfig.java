@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({S3StorageProperties.class})
-public class PropertiesConfig {}
+public class PropertiesConfig {
+}

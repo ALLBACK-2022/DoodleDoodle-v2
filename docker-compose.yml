@@ -78,8 +78,7 @@ services:
   ai:
     build:
       context: ./ai
-    # image: chokeong1/doodle-ai
-    container_name: doodle-ai
+    container_name: ai
     restart: on-failure
     depends_on:
       - kafka

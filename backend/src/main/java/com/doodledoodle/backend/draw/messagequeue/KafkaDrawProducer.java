@@ -14,6 +14,6 @@ public class KafkaDrawProducer {
     KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(DrawKafkaRequest request) {
-        kafkaTemplate.send("doodledoodle.to.ai.draw", "commit", request);
+        kafkaTemplate.send("doodledoodle.to.ai.draw", "draw", request);
     }
 }

@@ -36,7 +36,7 @@ spring:
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
-      group-id: DoodleDoodle
+      group-id: doodle
 
 logging:
   level:

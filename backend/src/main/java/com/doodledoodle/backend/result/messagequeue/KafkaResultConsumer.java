@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class KafkaResultConsumer {
     ResultService resultService;
     ObjectMapper objectMapper;
 
+    @Transactional
     @SneakyThrows(JsonProcessingException.class)
     @KafkaListener(topics = "doodledoodle.to.backend.result", containerFactory = "kafkaListenerContainerFactory")
     public void consume(String message) {

@@ -8,5 +8,5 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class GameWordResponse {
-  private String engName;
+    private String englishName;
 }

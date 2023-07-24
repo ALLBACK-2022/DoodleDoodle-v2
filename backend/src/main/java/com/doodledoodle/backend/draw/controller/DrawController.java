@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/draws")
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DrawController {
+    DrawService drawService;
 
-  DrawService drawService;
-
-  @PostMapping
-  public ResponseEntity<DrawResponse> saveDraw(
-      @ModelAttribute DrawRequest requset) {
-    return ResponseEntity.ok(drawService.saveDraw(requset));
-  }
+    @PostMapping
+    public ResponseEntity<DrawResponse> saveDraw(
+            @ModelAttribute DrawRequest request) throws IOException {
+        return ResponseEntity.ok(drawService.saveDraw(request));
+    }
 }

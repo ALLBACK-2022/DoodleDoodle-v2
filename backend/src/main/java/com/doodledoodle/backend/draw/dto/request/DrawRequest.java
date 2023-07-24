@@ -7,8 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @AllArgsConstructor
 public class DrawRequest {
-
-  private Long gameId;
-  private Integer drawNo;
-  private MultipartFile fileName;
+    private Long gameId;
+    private Integer playerNo;
+    private MultipartFile file;
 }

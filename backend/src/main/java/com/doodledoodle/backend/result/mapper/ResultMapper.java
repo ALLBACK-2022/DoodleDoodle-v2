@@ -3,13 +3,13 @@ package com.doodledoodle.backend.result.mapper;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
+import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
+import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
 import com.doodledoodle.backend.result.dto.response.DictionaryResultResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.dto.response.UserResultResponse;
-import com.doodledoodle.backend.result.entity.DictionaryMap;
 import com.doodledoodle.backend.result.entity.Result;
-import com.doodledoodle.backend.result.entity.SimilarityMap;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,10 +28,11 @@ public class ResultMapper {
 
     public List<Result> toEntityList(final SimilarityMap similarityMap, final Draw draw, final Game game, final DictionaryMap dictionaryMap) {
         return similarityMap.getKeySet().stream()
-                .map(key -> toEntity(similarityMap.getSimilarityByKey(key),
-                                    draw,
-                                    dictionaryMap.getDictionaryByKey(key),
-                                    game))
+                .map(key -> toEntity(
+                        similarityMap.getSimilarityByKey(key),
+                        draw,
+                        dictionaryMap.getDictionaryByKey(key),
+                        game))
                 .collect(Collectors.toList());
     }
 
@@ -40,9 +41,9 @@ public class ResultMapper {
         return DictionaryResultResponse.builder()
                 .id(result.getId())
                 .similarity(result.getSimilarity())
-                .name(dictionary.getKoreanName())
-                .engName(dictionary.getEnglishName())
-                .imgUrl(dictionary.getImgUrl())
+                .koreanName(dictionary.getKoreanName())
+                .englishName(dictionary.getEnglishName())
+                .imageUrl(dictionary.getImageUrl())
                 .build();
     }
 
@@ -50,15 +51,19 @@ public class ResultMapper {
         Draw draw = result.getDraw();
         return UserResultResponse.builder()
                 .drawId(draw.getId())
-                .drawNo(draw.getDrawNo())
-                .imgUrl(draw.getDoodle())
+                .playerNo(draw.getPlayerNo())
+                .imageUrl(draw.getImageUrl())
                 .similarity(result.getSimilarity())
                 .build();
     }
 
+    public DrawResultResponse toEmptyDrawResponse() {
+        return DrawResultResponse.builder().build();
+    }
+
     public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
         return DrawResultResponse.builder()
-                .doodle(draw.getDoodle())
+                .imageUrl(draw.getImageUrl())
                 .randomWord(toDictionaryResultResponse(results.get(0)))
                 .topFive(toTopFive(results))
                 .build();
@@ -66,13 +71,17 @@ public class ResultMapper {
 
     public GameResultResponse toGameResultResponse(final Game game, final List<Result> results) {
         return GameResultResponse.builder()
-                .randomWord(game.getRandomWord())
-                .users(toUserResultResponseDtoList(results))
+                .randomWord(game.getEnglishName())
+                .results(toUserResultResponseDtoList(game.getEnglishName(), results))
                 .build();
     }
 
-    private List<UserResultResponse> toUserResultResponseDtoList(final List<Result> results) {
-        return results.stream().map(this::toUserResultResponse).collect(Collectors.toList());
+    private List<UserResultResponse> toUserResultResponseDtoList(final String englishName, final List<Result> results) {
+        return results.stream()
+                .distinct()
+                .filter(r -> r.getDictionary().getEnglishName().equals(englishName))
+                .map(this::toUserResultResponse)
+                .collect(Collectors.toList());
     }
 
     private List<DictionaryResultResponse> toTopFive(final List<Result> results) {

@@ -10,7 +10,7 @@ import lombok.Getter;
 public class DictionaryResultResponse {
     private Long id;
     private Double similarity;
-    private String name;
-    private String engName;
-    private String imgUrl;
+    private String koreanName;
+    private String englishName;
+    private String imageUrl;
 }

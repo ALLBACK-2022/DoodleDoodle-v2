@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameMapper {
 
-  public Game toEntity(final GameRequest request) {
-    return Game.builder()
-        .playerNum(request.getUserNum())
-        .build();
-  }
+    public Game toEntity(final GameRequest request) {
+        return Game.builder()
+                .playerNum(request.getPlayerNum())
+                .build();
+    }
 
-  public GameWordResponse toResponse(final Game game) {
-    return GameWordResponse.builder()
-        .engName(game.getRandomWord())
-        .build();
-  }
+    public GameWordResponse toResponse(final Game game) {
+        return GameWordResponse.builder()
+                .englishName(game.getEnglishName())
+                .build();
+    }
 }

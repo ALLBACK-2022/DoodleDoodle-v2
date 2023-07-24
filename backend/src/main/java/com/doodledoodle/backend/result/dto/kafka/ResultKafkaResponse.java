@@ -12,4 +12,5 @@ import java.util.Map;
 public class ResultKafkaResponse {
     private Long drawId;
     private Map<String, Double> result;
+    private Map<String, Double> topFive;
 }
