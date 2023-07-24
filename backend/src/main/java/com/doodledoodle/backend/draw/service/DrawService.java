@@ -43,7 +43,6 @@ public class DrawService implements EntityLoader<Draw, Long> {
         .split("\\.");
     String fileType = splitFilename[splitFilename.length - 1];
     String fileName = "drawimage/" + draw.getId().toString() + "." + fileType;
-    kafkaDrawProducer.send(drawMapper.toDto(draw,game,request));
     ObjectMetadata data = new ObjectMetadata();
     data.setContentType(fileName);
     data.setContentLength(request.getFileName().getSize());

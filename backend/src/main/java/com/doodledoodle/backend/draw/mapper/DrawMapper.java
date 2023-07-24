@@ -23,11 +23,10 @@ public class DrawMapper {
         .build();
   }
 
-  public DrawKafkaRequest toDto(final Draw draw, final Game game, DrawRequest request){
+  public DrawKafkaRequest toDto(final Draw draw, final Game game){
     return DrawKafkaRequest.builder()
         .drawId(draw.getId())
         .randomWord(game.getRandomWord())
-        .file(request.getFileName())
         .build();
   }
 }

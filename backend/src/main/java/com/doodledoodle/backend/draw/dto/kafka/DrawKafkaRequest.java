@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Builder
@@ -13,5 +12,4 @@ import org.springframework.web.multipart.MultipartFile;
 public class DrawKafkaRequest {
     private Long drawId;
     private String randomWord;
-    private MultipartFile file;
 }
