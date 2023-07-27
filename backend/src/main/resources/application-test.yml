@@ -47,3 +47,10 @@ spring:
       topic:
         enabled: false
         attempts: 0
+
+  logging:
+    level:
+      com:
+        amazonaws:
+          util:
+            EC2MetadataUtils: error
