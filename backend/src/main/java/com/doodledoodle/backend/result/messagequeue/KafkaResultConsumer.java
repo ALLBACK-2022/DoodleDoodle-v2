@@ -1,5 +1,6 @@
 package com.doodledoodle.backend.result.messagequeue;
 
+import com.doodledoodle.backend.global.kafka.KafkaConsumer;
 import com.doodledoodle.backend.result.dto.kafka.ResultKafkaResponse;
 import com.doodledoodle.backend.result.service.ResultService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class KafkaResultConsumer {
+public class KafkaResultConsumer implements KafkaConsumer<ResultKafkaResponse> {
     ResultService resultService;
     ObjectMapper objectMapper;
 

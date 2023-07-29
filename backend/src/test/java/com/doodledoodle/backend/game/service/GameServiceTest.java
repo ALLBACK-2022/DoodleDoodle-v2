@@ -2,8 +2,10 @@ package com.doodledoodle.backend.game.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.doodledoodle.backend.game.dto.request.GameRequest;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.game.repository.GameRepository;
+import com.doodledoodle.backend.global.dto.IdResponse;
 import com.doodledoodle.backend.support.database.DatabaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,10 +24,15 @@ public class GameServiceTest {
     @BeforeEach
     void creatGame(){
         //given
-        Game game = Game.builder().playerNum(3).build();
-        gameRepository.save(game);
-        //when & then
-        assertThat(game.getPlayerNum()).isEqualTo(3);
+        int playerNum = 1;
+
+        //when
+        IdResponse<Long> response = gameService.createGame(new GameRequest(playerNum));
+
+        //then
+        Game gameEntity = gameRepository.findById(response.getId()).orElseThrow();
+
+        assertThat(response.getId()).isEqualTo(gameEntity.getId());
     }
 
     @Test
@@ -38,6 +45,7 @@ public class GameServiceTest {
         Game game = gameService.loadEntity(id);
         //then
         game.updateEnglishName(skateboard);
+
         assertThat(game.getEnglishName()).isEqualTo(skateboard);
     }
 }
