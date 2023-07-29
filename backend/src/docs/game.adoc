@@ -1,0 +1,12 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Game
+=== 플레이어 인원 추가
+operation::save player number[snippets='http-request,http-response']
+
+=== 랜덤 단어 선택
+operation::set random word[snippets='http-request,http-response']

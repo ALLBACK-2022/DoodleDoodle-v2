@@ -7,5 +7,7 @@
 
 = DoodleDoodle v2 API
 
+include::game.adoc[]
+include::draw.adoc[]
 include::dictionary.adoc[]
 include::result.adoc[]
