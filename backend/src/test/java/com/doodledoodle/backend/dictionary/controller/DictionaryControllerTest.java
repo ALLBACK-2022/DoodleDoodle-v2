@@ -1,5 +1,14 @@
 package com.doodledoodle.backend.dictionary.controller;
 
+import static com.doodledoodle.backend.support.docs.ApiDocumentUtils.getDocumentRequest;
+import static com.doodledoodle.backend.support.docs.ApiDocumentUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.service.DictionaryService;
 import com.doodledoodle.backend.support.docs.RestDocumentTest;
@@ -9,16 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import static com.doodledoodle.backend.support.docs.ApiDocumentUtils.getDocumentRequest;
-import static com.doodledoodle.backend.support.docs.ApiDocumentUtils.getDocumentResponse;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Dictionary 컨트롤러의")
 @WebMvcTest(DictionaryController.class)
@@ -35,11 +34,11 @@ class DictionaryControllerTest extends RestDocumentTest {
         //when
         ResultActions perform =
                 mockMvc.perform(
-                        get("/dictionaries/random-word")
+                        get("/dictionaries/random-words")
                                 .contentType(MediaType.APPLICATION_JSON));
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.word").isString());
+                .andExpect(jsonPath("$.korean_name").isString());
 
         //docs
         perform.andDo(print())
