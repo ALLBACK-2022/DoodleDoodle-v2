@@ -3,11 +3,12 @@ package com.doodledoodle.backend.game.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.doodledoodle.backend.game.dto.request.GameRequest;
+import com.doodledoodle.backend.game.dto.request.GameWordRequest;
+import com.doodledoodle.backend.game.dto.response.GameWordResponse;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.game.repository.GameRepository;
 import com.doodledoodle.backend.global.dto.IdResponse;
 import com.doodledoodle.backend.support.database.DatabaseTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ public class GameServiceTest {
 
     @Autowired private GameService gameService;
     @Autowired private GameRepository gameRepository;
+//    @Autowired private DictionaryRepository dictionaryRepository;
+//    @Autowired EntityManager em;
+
 
     @Test
     @DisplayName("인원수가 저장되는가")
-    @BeforeEach
     void creatGame(){
         //given
         int playerNum = 1;
@@ -39,13 +42,14 @@ public class GameServiceTest {
     @DisplayName("단어가 저장이 되는가")
     void saveWord() {
         //given
-        Long id = 1L;
-        String skateboard = "skateboard";
-        //when
-        Game game = gameService.loadEntity(id);
-        //then
-        game.updateEnglishName(skateboard);
+        Game game = gameRepository.save(new Game("skateboard", 1));
+        GameWordRequest request = new GameWordRequest(game.getId(), "스케이트보드");
 
-        assertThat(game.getEnglishName()).isEqualTo(skateboard);
+        //when
+        GameWordResponse response = gameService.saveWord(request);
+
+        //then
+        Game gameEntity = gameRepository.findById(game.getId()).orElseThrow();
+        assertThat(response.getEnglishName()).isEqualTo(gameEntity.getEnglishName());
     }
 }

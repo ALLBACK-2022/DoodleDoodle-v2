@@ -12,10 +12,10 @@ import com.doodledoodle.backend.draw.mapper.DrawMapper;
 import com.doodledoodle.backend.draw.messagequeue.KafkaDrawProducer;
 import com.doodledoodle.backend.draw.repository.DrawRepository;
 import com.doodledoodle.backend.game.entity.Game;
-import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.global.EntityLoader;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.global.storage.S3StorageProperties;
+import java.io.IOException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,8 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -33,7 +31,7 @@ public class DrawService implements EntityLoader<Draw, Long> {
     static String mainDirectory = "drawimage/";
     static String dot = ".";
     DrawRepository drawRepository;
-    GameService gameService;
+    EntityLoader<Game, Long> gameService;
     DrawMapper drawMapper;
     S3StorageProperties s3StorageProperties;
     KafkaDrawProducer kafkaDrawProducer;

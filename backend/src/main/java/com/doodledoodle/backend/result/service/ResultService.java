@@ -18,6 +18,7 @@ import com.doodledoodle.backend.result.repository.ResultRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@Slf4j
 public class ResultService implements EntityLoader<Result, Long> {
     ResultRepository resultRepository;
     ResultMapper resultMapper;
@@ -38,7 +40,6 @@ public class ResultService implements EntityLoader<Result, Long> {
         Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
         SimilarityMap similarityMap = new SimilarityMap(resultKafkaResponse.getResult());
         SimilarityMap topFiveSimilarityMap = new SimilarityMap(resultKafkaResponse.getTopFive());
-
         saveAllBySimilarityMap(draw, similarityMap);
         saveAllBySimilarityMap(draw, topFiveSimilarityMap);
     }
