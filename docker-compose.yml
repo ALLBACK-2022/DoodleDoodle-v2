@@ -21,6 +21,9 @@ services:
     container_name: backend
     ports:  
       - 8080:8080
+    environment:
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
     networks:
       - app-tier
     depends_on:
