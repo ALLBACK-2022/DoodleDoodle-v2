@@ -12,7 +12,7 @@ import Loading from '../components/Loading';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
 const aiBaseUrl = process.env.REACT_APP_AI_URL;
-const postImageToBackURL = `${backBaseUrl}/api/v1/draws`; // 백엔드에 이미지 보내는 API
+const postImageToBackURL = `${backBaseUrl}/draws`; // 백엔드에 이미지 보내는 API
 const postImageToAIURL = `${aiBaseUrl}/api/v1/ai/pictures`; // AI에 이미지 보내는 API
 const getAITaskStatusURL = `${aiBaseUrl}/api/v1/task_status`; // AI에게 Taskid로 상태확인
 const getAIResultURL = `${aiBaseUrl}/api/v1/result_predict`; // AI에게 Taskid로 분석결과 받기
@@ -41,7 +41,7 @@ function GamePage() {
     setRandWord(location.state.drawWord);
     setEngRandWord(location.state.engDrawWord);
     setMaxPlayer(location.state.playerNum);
-    gameID.current = location.state.gameID;
+    gameID.current = location.state.gameID.id;
     drawIdArray.current.length = 0;
     successCount.current = 0;
   }
@@ -54,9 +54,9 @@ function GamePage() {
 
   async function postImageToBack(imgFile) {
     const formData = new FormData();
-    formData.append('game-id', gameID.current);
-    formData.append('draw-no', currentPlayer);
-    formData.append('filename', imgFile);
+    formData.append('file', imgFile);
+    formData.append('gameId', gameID.current);
+    formData.append('playerNo', currentPlayer);
     const heders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
@@ -73,23 +73,15 @@ function GamePage() {
   }
 
   function goToNextPage() {
-    // console.log('try go to next page testcount:', successCount.current, maxPlayer);
-    if (successCount.current >= maxPlayer) {
-      const newURL = maxPlayer === 1 ? '../resultone' : '../resultmany';
-      // console.log('goToResultPage');
-      navigate(newURL, {
-        replace: true,
-        state: {
-          gameId: gameID.current,
-          drawId: drawIdArray.current,
-          isFromGamePage: true,
-        },
-      });
-    } else {
-      setTimeout(function d() {
-        goToNextPage();
-      }, 500);
-    }
+    const newURL = maxPlayer === 1 ? '../resultone' : '../resultmany';
+    navigate(newURL, {
+      replace: true,
+      state: {
+        gameId: gameID.current,
+        drawId: drawIdArray.current,
+        isFromGamePage: true,
+      },
+    });
   }
 
   // AI에게 받은 결과를 백엔드로 전달
@@ -198,6 +190,7 @@ function GamePage() {
   }
 
   // AI에 그린 이미지 보내고 TaskId받기
+  // eslint-disable-next-line no-unused-vars
   async function postImageToAI(imgFile) {
     const formData = new FormData();
     formData.append('filename', imgFile);
@@ -226,13 +219,14 @@ function GamePage() {
   // DrawingCanvas에서 이미지 로딩 완료후 호출
   // imageData를 받아서 파일객체 생성후 AI와 Backend에 Post
   // 마지막 플레이어면 1인 or 다인용 결과페이지로 이동(state로 id들 전달)
-  const imgDataPost = data => {
+  const imgDataPost = async data => {
     // 파일객체 생성 및 백엔드에 저장
     const metadata = { type: 'image/png' };
     const file = new File([data], ''.concat(gameID.current, '_', currentPlayer, '.png'), metadata);
-    postImageToBack(file);
-    postImageToAI(file);
-    if (currentPlayer < maxPlayer) countPlayer(current => current + 1); // 마지막 플레이어가 아니면 다음 플레이어로
+    await postImageToBack(file).then(() => {
+      if (currentPlayer < maxPlayer) countPlayer(current => current + 1); // 마지막 플레이어가 아니면 다음 플레이어로
+      else goToNextPage();
+    });
   };
 
   // NextButton을 클릭했을때 실행

@@ -58,7 +58,7 @@ function DrawingCanvas({ imgDataPost }, ref) {
 
   // 그리는 동안 호출(마우스 누르고 움직이는 동안)
   function drawing(event) {
-    if (canDrawing.current) return 1;
+    if (!canDrawing.current) return 1;
     let offsetX;
     let offsetY;
     if (event.type === 'touchstart' || event.type === 'touchmove') {
@@ -90,7 +90,7 @@ function DrawingCanvas({ imgDataPost }, ref) {
 
   // 그리기 시작하면 호출(마우스 누를때)
   function startDrawing(event) {
-    if (canDrawing.current) return 1;
+    if (!canDrawing.current) return 1;
     drawing(event);
     isDrawing.current = true;
     return 0;
@@ -205,7 +205,6 @@ function DrawingCanvas({ imgDataPost }, ref) {
 
     setCanDrawing: () => {
       canDrawing.current = false;
-      console.log(canDrawing.current);
     },
 
     // 현재 캔버스에있는 그림을 이미지파일로 반환, NextButton에서 실행해야됨
