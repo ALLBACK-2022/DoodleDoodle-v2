@@ -7,10 +7,9 @@ import Plus from '../assets/icons/plus.png';
 // 인원수 설정 후 Main페이지에서 랜덤단어생성 페이지로 이동
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const NumURL = `${backBaseUrl}/api/v1/games`;
+const NumURL = `${backBaseUrl}/games`;
 
 function GameStartButton() {
-  // console.log(backBaseUrl);
   const [count, setCount] = useState(1);
 
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ function GameStartButton() {
 
   async function start() {
     const req = {
-      'user-num': count,
+      player_num: count,
     };
 
     // console.log(count);
@@ -35,6 +34,7 @@ function GameStartButton() {
       'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
       'Content-type': 'application/json; charset=UTF-8',
     };
+
     await axios.post(NumURL, req, heders).then(response => {
       // console.log(response.data);
       navigate('random', { replace: false, state: { playerNum: count, gameID: response.data } });

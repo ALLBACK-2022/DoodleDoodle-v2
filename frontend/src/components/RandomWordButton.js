@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const baseURL = `${backBaseUrl}/api/v1/randwords`;
+const baseURL = `${backBaseUrl}/dictionaries/random-words`;
+
 function RandomWordButton({ image, setWord }) {
   async function onClick() {
     const response = await axios.get(baseURL);
-    setWord(response.data);
+    setWord(response.data.korean_name);
     // console.log(response.data);
   }
   useEffect(() => {

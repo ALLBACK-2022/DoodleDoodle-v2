@@ -3,7 +3,9 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const baseURL = `${backBaseUrl}/api/v1/randwords`;
+const baseURL = `${backBaseUrl}/dictionaries/random-words`;
+const postWordURL = `${backBaseUrl}/games/random-words`;
+
 // const baseURL = 'http://localhost:5000/api/randwords';
 function MobileRandomBtn({ setWord, start, word }) {
   const location = useLocation(); // 이전 페이지에서 받아온 데이터
@@ -15,11 +17,11 @@ function MobileRandomBtn({ setWord, start, word }) {
     window.sessionStorage.removeItem('gameId');
 
     const req = {
-      id: location.state.gameID,
-      name: word,
+      id: location.state.gameID.id,
+      korean_name: word,
     };
 
-    await axios.post(baseURL, req).then(response => {
+    await axios.post(postWordURL, req).then(response => {
       // console.log(response);
       navigate('../gamepage', {
         replace: true,
@@ -35,7 +37,7 @@ function MobileRandomBtn({ setWord, start, word }) {
 
   async function getRandWord() {
     const response = await axios.get(baseURL);
-    setWord(response.data);
+    setWord(response.data.korean_name);
     // console.log(response.data);
   }
   useEffect(() => {
