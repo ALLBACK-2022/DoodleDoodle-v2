@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DrawController {
     DrawService drawService;
 
-    @PostMapping("{gameId}/{playerNo}")
+    @PostMapping("games/{gameId}/player-no/{playerNo}")
     public ResponseEntity<DrawResponse> saveDraw(
             @PathVariable Long gameId,
             @PathVariable Integer playerNo,

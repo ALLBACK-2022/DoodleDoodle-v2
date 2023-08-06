@@ -12,9 +12,9 @@ import com.doodledoodle.backend.result.dto.kafka.ResultKafkaResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.entity.Result;
-import com.doodledoodle.backend.result.mapper.ResultMapper;
 import com.doodledoodle.backend.result.repository.ResultRepository;
 import com.doodledoodle.backend.support.database.DatabaseTest;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +31,6 @@ class ResultServiceTest {
     @Autowired private ResultRepository resultRepository;
     @Autowired private DrawRepository drawRepository;
     @Autowired private GameRepository gameRepository;
-    @Autowired private ResultMapper resultMapper;
     @Autowired private DictionaryRepository dictionaryRepository;
 
     @Test
@@ -54,8 +53,9 @@ class ResultServiceTest {
 
         //then
         Optional<Result> resultEntity = resultRepository.findById(1L);
-        Optional<Dictionary> dictionartEntity = dictionaryRepository.findByKoreanName("스케이트보드");
-        assertThat(resultEntity.get().getDictionary().getId()).isEqualTo(dictionartEntity.get().getId());
+        Optional<Dictionary> dictionaryEntity = dictionaryRepository.findByKoreanName("스케이트보드");
+        
+        assertThat(resultEntity.get().getDictionary().getId()).isEqualTo(dictionaryEntity.get().getId());
     }
 
 
@@ -63,9 +63,10 @@ class ResultServiceTest {
     @Nested
     @DisplayName("결과 조회 로직 중")
     class selectResult {
+
         @Test
         @DisplayName("Draw PK로 조회가 수행되는가")
-        void getResultByDrawId_WithResults() {
+        void getResultByDrawId() {
             //given
             Game game = gameRepository.save(new Game("skateboard",1));
             Draw draw = drawRepository.save(new Draw(" ", game,1));
@@ -83,7 +84,10 @@ class ResultServiceTest {
             DrawResultResponse response = resultService.getResultByDrawId(draw.getId());
 
             //then
-            assertThat(response.getRandomWord().getEnglishName()).isEqualTo("donut");
+            List<Result> results= resultRepository.findByDrawIdOrderBySimilarityDesc(draw.getId());
+            Dictionary dictionaryEntity = dictionaryRepository.findById(results.get(0).getDictionary().getId()).orElseThrow();
+
+            assertThat(response.getRandomWord().getEnglishName()).isEqualTo(dictionaryEntity.getEnglishName());
         }
 
         @Test

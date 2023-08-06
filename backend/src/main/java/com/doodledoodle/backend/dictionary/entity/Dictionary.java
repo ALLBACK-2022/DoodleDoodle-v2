@@ -24,7 +24,7 @@ public class Dictionary {
     @Column(unique = true, nullable = false)
     private String imageUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "dictionary")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Result result;
 
     @Builder

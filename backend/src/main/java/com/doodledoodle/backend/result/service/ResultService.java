@@ -52,10 +52,10 @@ public class ResultService implements EntityLoader<Result, Long> {
 
     public DrawResultResponse getResultByDrawId(final Long drawId) {
         List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
-        Draw draw = drawService.loadEntity(drawId);
         if (results.isEmpty()) {
             return resultMapper.toEmptyDrawResponse();
         }
+        Draw draw = drawService.loadEntity(drawId);
         return resultMapper.toDrawResultResponse(draw, results);
     }
 

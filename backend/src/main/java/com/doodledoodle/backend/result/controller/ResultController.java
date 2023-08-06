@@ -26,6 +26,9 @@ public class ResultController {
 
     @GetMapping("/draw/{drawId}")
     public ResponseEntity<DrawResultResponse> getResultByDrawId(@PathVariable Long drawId) {
+        if (resultService.getResultByDrawId(drawId).getTopFive().isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(resultService.getResultByDrawId(drawId));
     }
 }

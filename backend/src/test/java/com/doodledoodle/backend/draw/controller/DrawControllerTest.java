@@ -34,22 +34,9 @@ public class DrawControllerTest extends RestDocumentTest {
         MockMultipartFile image = new MockMultipartFile("images", "image.png", "MediaType.IMAGE_JPEG_VALUE", "Image".getBytes(StandardCharsets.UTF_8));
         DrawResponse expected = new DrawResponse(1L);
         given(drawService.saveDraw(any())).willReturn(expected);
-
-//        SimpleModule module = new SimpleModule();
-//        module.addSerializer(MultipartFile.class, new MultipartFileSerializer());
-//        objectMapper.registerModule(module);
-
-        //when
-//        ResultActions perform =
-//                mockMvc.perform(
-//                        post("/draws")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(
-//                                    toRequestBody(
-//                                        new DrawRequest(1L,1,image))));
         ResultActions perform =
                 mockMvc.perform(
-                                post("/draws/1/1")
+                                post("/draws/games/1/player-no/1")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(
                                         toRequestBody(

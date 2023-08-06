@@ -9,6 +9,7 @@ import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.game.repository.GameRepository;
 import com.doodledoodle.backend.global.dto.IdResponse;
 import com.doodledoodle.backend.support.database.DatabaseTest;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ public class GameServiceTest {
 
     @Autowired private GameService gameService;
     @Autowired private GameRepository gameRepository;
-//    @Autowired private DictionaryRepository dictionaryRepository;
-//    @Autowired EntityManager em;
+    @Autowired EntityManager em;
 
 
     @Test
@@ -38,9 +38,14 @@ public class GameServiceTest {
         assertThat(response.getId()).isEqualTo(gameEntity.getId());
     }
 
+
+
+
     @Test
     @DisplayName("단어가 저장이 되는가")
     void saveWord() {
+        em.flush();
+        em.clear();
         //given
         Game game = gameRepository.save(new Game("skateboard", 1));
         GameWordRequest request = new GameWordRequest(game.getId(), "스케이트보드");
