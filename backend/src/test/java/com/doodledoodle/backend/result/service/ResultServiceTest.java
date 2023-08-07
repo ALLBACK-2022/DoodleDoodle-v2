@@ -16,7 +16,6 @@ import com.doodledoodle.backend.result.repository.ResultRepository;
 import com.doodledoodle.backend.support.database.DatabaseTest;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -52,10 +51,10 @@ class ResultServiceTest {
         resultService.saveResults(new ResultKafkaResponse(draw.getId(),resultMap,topFiveMap));
 
         //then
-        Optional<Result> resultEntity = resultRepository.findById(1L);
-        Optional<Dictionary> dictionaryEntity = dictionaryRepository.findByKoreanName("스케이트보드");
-        
-        assertThat(resultEntity.get().getDictionary().getId()).isEqualTo(dictionaryEntity.get().getId());
+        List<Result> results= resultRepository.findByDrawIdOrderBySimilarityDesc(draw.getId());
+        Result resultEntity = resultRepository.findById(results.get(0).getId()).orElseThrow();
+
+        assertThat(resultEntity.getGame().getId()).isEqualTo(game.getId());
     }
 
 
