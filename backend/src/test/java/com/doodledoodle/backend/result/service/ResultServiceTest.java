@@ -24,7 +24,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 
 @DatabaseTest
 @EmbeddedKafka(topics = {"doodledoodle.to.backend.result", "doodledoodle.to.ai.draw"})
-@DisplayName("Result 서비스의") // todo Draw와 Game의 로직이 완성된 후 작성하기 (종속적임)
+@DisplayName("Result 서비스의")
 class ResultServiceTest {
     @Autowired private ResultService resultService;
     @Autowired private ResultRepository resultRepository;
