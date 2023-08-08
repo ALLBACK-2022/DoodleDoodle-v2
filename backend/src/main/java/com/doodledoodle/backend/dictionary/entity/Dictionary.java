@@ -1,6 +1,5 @@
 package com.doodledoodle.backend.dictionary.entity;
 
-import com.doodledoodle.backend.result.entity.Result;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,14 +23,10 @@ public class Dictionary {
     @Column(unique = true, nullable = false)
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Result result;
-
     @Builder
-    public Dictionary(String koreanName, String englishName, String imageUrl, Result result) {
+    public Dictionary(String koreanName, String englishName, String imageUrl) {
         this.koreanName = koreanName;
         this.englishName = englishName;
         this.imageUrl = imageUrl;
-        this.result = result;
     }
 }

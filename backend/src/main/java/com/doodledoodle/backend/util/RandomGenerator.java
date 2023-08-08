@@ -6,7 +6,11 @@ import java.util.Random;
 
 @Component
 public class RandomGenerator {
-    private final Random random = new Random();
+    private final Random random;
+
+    public RandomGenerator() {
+        random = new Random();
+    }
 
     public Long generateRandom() {
         return (long) (random.nextDouble() * 99 + 1);

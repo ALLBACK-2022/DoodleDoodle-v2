@@ -18,7 +18,6 @@ import com.doodledoodle.backend.result.repository.ResultRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Slf4j
 public class ResultService implements EntityLoader<Result, Long> {
     ResultRepository resultRepository;
     ResultMapper resultMapper;
@@ -61,8 +59,10 @@ public class ResultService implements EntityLoader<Result, Long> {
 
     public GameResultResponse getResultByGameId(final Long gameId) {
         List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
+        if (results.isEmpty()) {
+            return resultMapper.toEmptyGameResponse();
+        }
         Game game = gameService.loadEntity(gameId);
-
         return resultMapper.toGameResultResponse(game, results);
     }
 

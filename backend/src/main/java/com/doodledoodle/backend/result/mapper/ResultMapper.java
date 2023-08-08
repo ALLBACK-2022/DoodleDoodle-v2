@@ -91,4 +91,8 @@ public class ResultMapper {
                 toDictionaryResultResponse(results.get(3)),
                 toDictionaryResultResponse(results.get(4)));
     }
+
+    public GameResultResponse toEmptyGameResponse() {
+        return GameResultResponse.builder().build();
+    }
 }
