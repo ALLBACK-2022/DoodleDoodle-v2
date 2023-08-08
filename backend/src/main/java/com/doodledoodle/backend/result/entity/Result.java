@@ -25,7 +25,7 @@ public class Result implements Auditable {
     private Double similarity;
 
     @JoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Dictionary dictionary;
 
     @JoinColumn

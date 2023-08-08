@@ -21,11 +21,19 @@ public class ResultController {
 
     @GetMapping("/game/{gameId}")
     public ResponseEntity<GameResultResponse> getResultByGameId(@PathVariable Long gameId) {
-        return ResponseEntity.ok(resultService.getResultByGameId(gameId));
+        GameResultResponse gameResultResponse = resultService.getResultByGameId(gameId);
+        if (gameResultResponse.getResults() == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(gameResultResponse);
     }
 
     @GetMapping("/draw/{drawId}")
     public ResponseEntity<DrawResultResponse> getResultByDrawId(@PathVariable Long drawId) {
-        return ResponseEntity.ok(resultService.getResultByDrawId(drawId));
+        DrawResultResponse drawResultResponse = resultService.getResultByDrawId(drawId);
+        if (drawResultResponse.getTopFive() == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(drawResultResponse);
     }
 }

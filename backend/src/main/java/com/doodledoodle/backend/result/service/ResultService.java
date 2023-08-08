@@ -38,7 +38,6 @@ public class ResultService implements EntityLoader<Result, Long> {
         Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
         SimilarityMap similarityMap = new SimilarityMap(resultKafkaResponse.getResult());
         SimilarityMap topFiveSimilarityMap = new SimilarityMap(resultKafkaResponse.getTopFive());
-
         saveAllBySimilarityMap(draw, similarityMap);
         saveAllBySimilarityMap(draw, topFiveSimilarityMap);
     }
@@ -51,17 +50,19 @@ public class ResultService implements EntityLoader<Result, Long> {
 
     public DrawResultResponse getResultByDrawId(final Long drawId) {
         List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
-        Draw draw = drawService.loadEntity(drawId);
         if (results.isEmpty()) {
             return resultMapper.toEmptyDrawResponse();
         }
+        Draw draw = drawService.loadEntity(drawId);
         return resultMapper.toDrawResultResponse(draw, results);
     }
 
     public GameResultResponse getResultByGameId(final Long gameId) {
         List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
+        if (results.isEmpty()) {
+            return resultMapper.toEmptyGameResponse();
+        }
         Game game = gameService.loadEntity(gameId);
-
         return resultMapper.toGameResultResponse(game, results);
     }
 

@@ -1,0 +1,9 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Draw
+=== 사진 전송
+operation::save draw and send to kafka[snippets='http-request,http-response']
