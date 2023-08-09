@@ -48,7 +48,7 @@ public class DrawServiceTest {
         Game gameEntity = gameRepository.save(new Game("skateboard",1));
 
         //when
-        DrawResponse response = drawService.saveDraw(new DrawRequest(gameEntity.getId(),playerNo,file));
+        DrawResponse response = drawService.saveDraw(gameEntity.getId(), playerNo, file);
 
         //then
         assertThat(response.getDrawId()).isEqualTo(1L);

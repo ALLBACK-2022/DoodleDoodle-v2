@@ -33,7 +33,7 @@ public class DrawControllerTest extends RestDocumentTest {
         //given
         MockMultipartFile image = new MockMultipartFile("images", "image.png", "MediaType.IMAGE_JPEG_VALUE", "Image".getBytes(StandardCharsets.UTF_8));
         DrawResponse expected = new DrawResponse(1L);
-        given(drawService.saveDraw(any())).willReturn(expected);
+        given(drawService.saveDraw(any(), any(), any())).willReturn(expected);
         ResultActions perform =
                 mockMvc.perform(
                                 post("/draws/games/1/player-no/1")

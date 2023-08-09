@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResultController {
     ResultService resultService;
 
-    @GetMapping("/game/{gameId}")
+    @GetMapping("/games/{gameId}")
     public ResponseEntity<GameResultResponse> getResultByGameId(@PathVariable Long gameId) {
         GameResultResponse gameResultResponse = resultService.getResultByGameId(gameId);
         if (gameResultResponse.getResults() == null) {
@@ -28,7 +28,7 @@ public class ResultController {
         return ResponseEntity.ok(gameResultResponse);
     }
 
-    @GetMapping("/draw/{drawId}")
+    @GetMapping("/draws/{drawId}")
     public ResponseEntity<DrawResultResponse> getResultByDrawId(@PathVariable Long drawId) {
         DrawResultResponse drawResultResponse = resultService.getResultByDrawId(drawId);
         if (drawResultResponse.getTopFive() == null) {

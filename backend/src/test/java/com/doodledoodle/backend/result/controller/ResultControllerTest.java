@@ -41,7 +41,7 @@ class ResultControllerTest extends RestDocumentTest {
         //when
         ResultActions perform =
                 mockMvc.perform(
-                        get("/results/game/1")
+                        get("/results/games/1")
                                 .contentType(MediaType.APPLICATION_JSON));
         //then
         perform.andExpect(status().isOk())
@@ -67,7 +67,7 @@ class ResultControllerTest extends RestDocumentTest {
         //when
         ResultActions perform =
                 mockMvc.perform(
-                        get("/results/draw/1")
+                        get("/results/draws/1")
                                 .contentType(MediaType.APPLICATION_JSON));
         //then
         perform.andExpect(status().isOk());
