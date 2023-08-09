@@ -7,7 +7,8 @@ import back from '../assets/icons/mobile-back.png';
 import restart from '../assets/icons/mobile-again.png';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const NumURL = `${backBaseUrl}/api/v1/games`;
+const NumURL = `${backBaseUrl}/games`;
+
 function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({
@@ -16,10 +17,7 @@ function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum })
 
   // 랜덤페이지로 이동
   async function goToRandomPage(count) {
-    await axios.post(NumURL, { 'user-num': count }).then(response => {
-      // console.log(response.data);
-      // 새로운 gameId 받아서 이동
-
+    await axios.post(NumURL, { player_num: count }).then(response => {
       navigate('../random', { replace: true, state: { playerNum: count, gameID: response.data } });
     });
   }
