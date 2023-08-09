@@ -9,7 +9,7 @@ import ResultMulti from '../components/ResultMulti';
 import '../scrollbar.css';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const getInfoURL = `${backBaseUrl}/api/v1/results/game/`;
+const getInfoURL = `${backBaseUrl}/results/games/`;
 
 function ResultMany() {
   const [playersInfo, setPlayersInfo] = useState([]);
@@ -31,10 +31,8 @@ function ResultMany() {
     if (!storageGameId) {
       window.sessionStorage.setItem('gameId', location.state.gameId);
       gameId.current = location.state.gameId;
-      // console.log('get location.state id');
     } else {
       gameId.current = Number(storageGameId);
-      // console.log('get storage id');
     }
   }
 
@@ -56,33 +54,20 @@ function ResultMany() {
       'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
     };
 
-    // console.log('getData() here');
     await axios.get(getInfoURL + gameId.current.toString(), heders).then(response => {
-      // console.log(response);
-      setRandword(response.data.randword);
-      setPlayersInfo(response.data.users);
-      // console.log(playersInfo);
-      // console.log(randword);
-      // eslint-disable-next-line no-unused-vars
-      // const temp2 = response.data.users.map(player => {
-      //   // console.log('draw-no', player.draw_no);
-      //   // console.log('draw-id', player['draw-id']);
-      //   // console.log('img_url', player.img_url);
-      //   // console.log('img_url', player.similarity);
-      //   return player;
-      // });
+      console.log(response.data);
+      setRandword(response.data.random_word);
+      setPlayersInfo(response.data.results);
       setInfoLoading(loading => !loading);
     });
   }
   useEffect(() => {
-    // console.log('setGameid');
     setGameid();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId]);
 
   useEffect(() => {
@@ -112,10 +97,10 @@ function ResultMany() {
               <MobileResultMulti
                 rank={index + 1}
                 percentage={player.similarity}
-                doodle={player.img_url}
-                player={player.draw_no}
-                key={player['draw-id']}
-                drawid={player['draw-id']}
+                doodle={player.image_url}
+                player={player.player_no}
+                key={player.draw_id}
+                drawid={player.draw_id}
               />
             ))}
           </div>
@@ -129,11 +114,11 @@ function ResultMany() {
               <ResultMulti
                 rank={index + 1}
                 percentage={player.similarity}
-                doodle={player.img_url}
-                player={player.draw_no}
-                key={player['draw-id']}
+                doodle={player.image_url}
+                player={player.player_no}
+                key={player.draw_id}
+                drawid={player.draw_id}
                 number={playersInfo.length}
-                drawid={player['draw-id']}
               />
             ))}
           </div>
@@ -148,8 +133,8 @@ function ResultMany() {
               isforOne={false}
               isFromGamePage
               userNum={playersInfo.length}
-              img={playersInfo[0].img_url}
-              resultString={setResultString(playersInfo[0].draw_no, randword, playersInfo[0].similarity)}
+              img={playersInfo[0].image_url}
+              resultString={setResultString(playersInfo[0].player_no, randword, playersInfo[0].similarity)}
             />
           </div>
         )}

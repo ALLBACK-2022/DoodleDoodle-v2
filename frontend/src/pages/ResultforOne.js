@@ -11,7 +11,7 @@ import testImage from '../assets/icons/mobiledoodle_8.png'; // 기본 이미지
 import ResultButtons from '../components/ResultButtons';
 
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
-const baseURL = `${backBaseUrl}/api/v1/results/draw/`;
+const baseURL = `${backBaseUrl}/results/draws/`;
 
 function ResultforOne() {
   const [chart, setChart] = useState([{ name: '?', value: 0.0 }]); // 유사도 상위 5개 이름과 유사도
@@ -23,51 +23,43 @@ function ResultforOne() {
 
   const location = useLocation();
 
-  // let testCount = 0;
   // 백엔드에서 API 불러오는 함수
   async function getResult() {
     // 결과 받아오는 API 호출
-    // console.log('getResult Start');
     const drawId = location.state.isFromGamePage ? location.state.drawId[0] : location.state.drawId;
     await axios
       .get(baseURL.concat(drawId))
       // 호출이 완료되면
       .then(response => {
-        // testCount += 1;
-        // console.log(testCount, ': ', response);
         const topfiveArray = [];
         const imageArray = [];
         // 유사도 상위 5개 데이터 저장
-        const top = response.data.topfive;
+        const top = response.data.top_five;
         // 반복문 돌려서 randomWord
-        const randomWord = response.data.randword;
-        const userDoodle = response.data.doodle;
-        // console.log(top, userDoodle);
+        const randomWord = response.data.random_word;
+        const userDoodle = response.data.image_url;
         // topfiveArray에 5개 데이터의 이름과 유사도 값을 넣고
         // imageArray에 5개 데이터의 이미지를 사전에서 불러와 넣는다
         for (let i = 0; i < 5; i += 1) {
-          // console.log(top[i].dictionary.name, ': ', top[i].similarity);
           topfiveArray.push({
-            name: top[i].dictionary.name,
+            name: top[i].korean_name,
             value: top[i].similarity,
           });
-          imageArray.push(top[i].dictionary.img_url);
+          imageArray.push(top[i].image_url);
         }
-        // console.log('<randomWord>', randomWord.dictionary.name, ': ', randomWord.similarity);
         // 유사도 상위5개 차트의 이미지와 이름, 유사도값 업데이트
         setImageUrl(imageArray);
         setChart(topfiveArray);
         setIsLoad(true);
         // 처음 주어진 랜덤단어의 이름, 유사도, 내가 그렸던 그림 업데이트
         setRandomWordData({
-          name: randomWord.dictionary.name,
+          name: randomWord.korean_name,
           value: randomWord.similarity,
           // 페이지 넘어오며 받은 drawId로 API호출해서 이미지파일 받아옴
           imageUrl: userDoodle,
         });
       })
       .catch(error => {
-        // console.log('test', testCount, ' error: ', error);
         if (error) {
           setChart([defaultData, defaultData, defaultData, defaultData, defaultData]);
           setImageUrl([testImage, testImage, testImage, testImage, testImage]);
@@ -94,12 +86,9 @@ function ResultforOne() {
   });
 
   useEffect(() => {
-    // console.log('useEffect() here');
     getResult();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // 여기서 POST API 불러오기(각 데이터 넣어주기)
 
   return (
     <div id="resultonepage" className="relative w-screen h-screen bg-primary select-none">
