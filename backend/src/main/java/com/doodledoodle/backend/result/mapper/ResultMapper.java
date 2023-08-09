@@ -3,6 +3,7 @@ package com.doodledoodle.backend.result.mapper;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
+import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
 import com.doodledoodle.backend.result.dto.response.DictionaryResultResponse;
@@ -64,9 +65,16 @@ public class ResultMapper {
     public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
         return DrawResultResponse.builder()
                 .imageUrl(draw.getImageUrl())
-                .randomWord(toDictionaryResultResponse(results.get(0)))
+                .randomWord(toDictionaryResultResponse(toRandomWordResult(draw, results)))
                 .topFive(toTopFive(results))
                 .build();
+    }
+
+    private Result toRandomWordResult(final Draw draw, final List<Result> results) {
+        return results.stream()
+                .filter(r -> r.getGame().getEnglishName().equals(draw.getGame().getEnglishName()))
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public GameResultResponse toGameResultResponse(final Game game, final List<Result> results) {
@@ -86,6 +94,7 @@ public class ResultMapper {
 
     private List<DictionaryResultResponse> toTopFive(final List<Result> results) {
         return List.of(
+                toDictionaryResultResponse(results.get(0)),
                 toDictionaryResultResponse(results.get(1)),
                 toDictionaryResultResponse(results.get(2)),
                 toDictionaryResultResponse(results.get(3)),
