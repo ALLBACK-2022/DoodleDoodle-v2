@@ -63,16 +63,23 @@ public class ResultMapper {
     }
 
     public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
+        Result randomWordResult = toRandomWordResult(draw, results);
         return DrawResultResponse.builder()
                 .imageUrl(draw.getImageUrl())
-                .randomWord(toDictionaryResultResponse(toRandomWordResult(draw, results)))
-                .topFive(toTopFive(results))
+                .randomWord(toDictionaryResultResponse(randomWordResult))
+                .topFive(toTopFive(toResultsWithoutRandomWord(results, randomWordResult)))
                 .build();
+    }
+
+    private List<Result> toResultsWithoutRandomWord(final List<Result> results, final Result randomWordResult) {
+        return results.stream()
+                .filter(result -> !result.getId().equals(randomWordResult.getId()))
+                .collect(Collectors.toList());
     }
 
     private Result toRandomWordResult(final Draw draw, final List<Result> results) {
         return results.stream()
-                .filter(r -> r.getGame().getEnglishName().equals(draw.getGame().getEnglishName()))
+                .filter(r -> r.getDictionary().getEnglishName().equals(draw.getGame().getEnglishName()))
                 .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -80,13 +87,12 @@ public class ResultMapper {
     public GameResultResponse toGameResultResponse(final Game game, final List<Result> results) {
         return GameResultResponse.builder()
                 .randomWord(game.getEnglishName())
-                .results(toUserResultResponseDtoList(game.getEnglishName(), results))
+                .results(toUserResultResponseList(game.getEnglishName(), results))
                 .build();
     }
 
-    private List<UserResultResponse> toUserResultResponseDtoList(final String englishName, final List<Result> results) {
+    private List<UserResultResponse> toUserResultResponseList(final String englishName, final List<Result> results) {
         return results.stream()
-                .distinct()
                 .filter(r -> r.getDictionary().getEnglishName().equals(englishName))
                 .map(this::toUserResultResponse)
                 .collect(Collectors.toList());

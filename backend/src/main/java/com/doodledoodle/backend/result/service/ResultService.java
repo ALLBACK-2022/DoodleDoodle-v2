@@ -28,6 +28,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ResultService implements EntityLoader<Result, Long> {
+    private static final int RESULT_PER_PLAYER_SIZE = 6;
     ResultRepository resultRepository;
     ResultMapper resultMapper;
     DrawService drawService;
@@ -59,10 +60,11 @@ public class ResultService implements EntityLoader<Result, Long> {
 
     public GameResultResponse getResultByGameId(final Long gameId) {
         List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
-        if (results.isEmpty()) {
+        Game game = gameService.loadEntity(gameId);
+
+        if (results.size() != game.getPlayerNum() * RESULT_PER_PLAYER_SIZE) {
             return resultMapper.toEmptyGameResponse();
         }
-        Game game = gameService.loadEntity(gameId);
         return resultMapper.toGameResultResponse(game, results);
     }
 

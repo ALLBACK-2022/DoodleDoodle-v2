@@ -1,0 +1,128 @@
+version: "3"
+services: 
+  frontend:
+    build: 
+      context: ./frontend
+      args:
+        API_URL: "*"
+    container_name: frontend
+    volumes: 
+      - build_frontend:/frontend/build
+      - ./frontend:/frontend/
+      - ./frontend/node_modules/:/frontend/node_modules
+    image: run
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080/api/v2
+      - WDS_SOCKET_PORT=0
+      - CI=true
+    stdin_open: true
+    tty: true
+  
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    restart: on-failure
+    volumes:
+      - build_frontend:/var/www/frontend
+    depends_on:
+      - frontend
+    networks:
+      - app-tier
+
+  db:
+    image: postgres
+    restart: on-failure
+    container_name: db
+    ports:
+      - 5433:5432
+    environment: 
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+    networks:
+      - app-tier
+
+  backend:
+    env_file:
+      .env
+    build:
+      context: ./backend
+    command: gradle bootRun
+    container_name: backend
+    ports:  
+      - 8080:8080
+    environment:
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+    networks:
+      - app-tier
+    depends_on:
+      - db
+      - kafka
+    restart: on-failure
+    tty: true
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+    ports:
+      - 2181:2181
+    networks:
+     - app-tier
+  
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - 9092:9092
+    container_name: kafka
+    restart: on-failure
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: dresses:1:1,ratings:1:1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+    networks:
+      - app-tier
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    ports:
+      - 9000:9000
+    container_name: kafdrop
+    restart: on-failure
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+      JVM_OPTS: "-Xms32M -Xmx64M"
+      SERVER_SERVLET_CONTEXTPATH: /
+    depends_on:
+      - kafka
+    networks:
+      - app-tier
+    tty: true
+
+  ai:
+    build:
+      context: ./ai
+    container_name: ai
+    restart: on-failure
+    depends_on:
+      - kafka
+      - backend
+    networks:
+      - app-tier
+    tty: true
+
+networks:
+  app-tier:
+    driver: bridge
+
+volumes:
+  build_frontend: null
