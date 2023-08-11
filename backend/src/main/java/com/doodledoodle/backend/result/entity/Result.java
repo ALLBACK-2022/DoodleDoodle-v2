@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@EqualsAndHashCode(of = {"dictionary"})
+@EqualsAndHashCode(of = {"dictionary", "draw"})
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Result implements Auditable {

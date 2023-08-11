@@ -93,6 +93,7 @@ public class ResultMapper {
 
     private List<UserResultResponse> toUserResultResponseList(final String englishName, final List<Result> results) {
         return results.stream()
+                .distinct()
                 .filter(r -> r.getDictionary().getEnglishName().equals(englishName))
                 .map(this::toUserResultResponse)
                 .collect(Collectors.toList());

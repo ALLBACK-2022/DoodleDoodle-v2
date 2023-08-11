@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@EqualsAndHashCode(of = "imageUrl")
 @Where(clause = "deleted_at is null")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
