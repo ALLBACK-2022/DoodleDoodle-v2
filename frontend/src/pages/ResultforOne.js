@@ -22,11 +22,12 @@ function ResultforOne() {
   const defaultData = { name: '?', value: 0.0 };
 
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const drawId = queryParams.get('draw-id');
 
   // 백엔드에서 API 불러오는 함수
   async function getResult() {
     // 결과 받아오는 API 호출
-    const drawId = location.state.isFromGamePage ? location.state.drawId[0] : location.state.drawId;
     await axios
       .get(baseURL.concat(drawId))
       // 호출이 완료되면
@@ -160,6 +161,7 @@ function ResultforOne() {
               isPC={isPC}
               isFromGamePage={location.state.isFromGamePage}
               text={setResultString(randomWordData.name, randomWordData.value)}
+              id={drawId}
             />
           )}
         </div>
@@ -171,6 +173,7 @@ function ResultforOne() {
               userNum={1}
               img={randomWordData.imageUrl}
               resultString={setResultString(randomWordData.name, randomWordData.value)}
+              id={drawId}
             />
           </div>
         )}

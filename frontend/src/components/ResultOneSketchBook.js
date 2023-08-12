@@ -3,7 +3,7 @@ import sketchbook from '../assets/icons/sketchbook.png';
 import ResultText from './ResultText';
 import ResultButtons from './ResultButtons';
 
-function ResultOneSketchBook({ randomWordData, isPC, isFromGamePage, text }) {
+function ResultOneSketchBook({ randomWordData, isPC, isFromGamePage, text, id }) {
   return (
     <div
       className="deskTop:w-[40vw] deskTop:h-[40vw] deskTop:max-w-[65vh] deskTop:max-h-[65vh]
@@ -30,6 +30,7 @@ function ResultOneSketchBook({ randomWordData, isPC, isFromGamePage, text }) {
             img={randomWordData.imageUrl}
             userNum={1}
             isFromGamePage={isFromGamePage}
+            id={id}
           />
         )}
       </div>

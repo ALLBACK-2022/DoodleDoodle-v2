@@ -12,8 +12,6 @@ function StartDrawButton({ image, word }) {
   // 여기 수정하면  MobileRandomBtn.js도 수정
 
   async function onClick() {
-    window.sessionStorage.removeItem('gameId');
-
     const heders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',

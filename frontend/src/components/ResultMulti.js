@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 
-function ResultMulti({ percentage, rank, doodle, player, number, drawid }) {
+function ResultMulti({ percentage, rank, doodle, player, number, drawid, gameId }) {
   const navigate = useNavigate();
   function chagneRank2String(ranknum) {
     switch (ranknum) {
@@ -34,9 +34,9 @@ function ResultMulti({ percentage, rank, doodle, player, number, drawid }) {
   };
 
   function onClick() {
-    navigate('../resultone', {
+    navigate(`../resultone?draw-id=${drawid}`, {
       replace: true,
-      state: { isFromGamePage: false, drawId: drawid },
+      state: { isFromGamePage: gameId, drawId: drawid },
     });
   }
 

@@ -68,8 +68,9 @@ function GamePage() {
 
   async function goToNextPage() {
     if (maxPlayer === 1) {
+      const drawId = drawIdArray.current[currentPlayer - 1];
       await axios
-        .get(getResultOne.concat(drawIdArray.current[currentPlayer - 1]))
+        .get(getResultOne.concat(drawId))
         // 호출이 완료되면
         .then(response => {
           if (response.data === '') {
@@ -77,12 +78,12 @@ function GamePage() {
               goToNextPage();
             }, 250);
           } else {
-            navigate('../resultone', {
+            navigate(`../resultone?draw-id=${drawId}`, {
               replace: true,
               state: {
                 gameId: gameID.current,
                 drawId: drawIdArray.current,
-                isFromGamePage: true,
+                isFromGamePage: -1,
               },
             });
           }
@@ -98,12 +99,12 @@ function GamePage() {
               goToNextPage();
             }, 250);
           } else {
-            navigate('../resultmany', {
+            navigate(`../resultmany?game-id=${gameID.current}`, {
               replace: true,
               state: {
                 gameId: gameID.current,
                 drawId: drawIdArray.current,
-                isFromGamePage: true,
+                isFromGamePage: -1,
               },
             });
           }

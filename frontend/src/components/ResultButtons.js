@@ -9,7 +9,7 @@ import restart from '../assets/icons/mobile-again.png';
 const backBaseUrl = process.env.REACT_APP_BACKEND_URL;
 const NumURL = `${backBaseUrl}/games`;
 
-function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum }) {
+function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum, id }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({
     query: '(max-width: 700px)',
@@ -23,15 +23,14 @@ function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum })
   }
 
   function onClick() {
-    // console.log(isFromGamePage);
     // 이전 페이지가 게임페이지면 랜덤페이지로 이동(다시하기 버튼)
-    if (isFromGamePage) {
+    if (isFromGamePage < 0) {
       // userNum 넘겨주기
       goToRandomPage(userNum);
     }
     // 뒤로가기 버튼
     else {
-      navigate('../resultmany', { replace: false });
+      navigate(`../resultmany?game-id=${isFromGamePage}`, { replace: false });
     }
   }
 
@@ -39,7 +38,7 @@ function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum })
     return (
       <div className="inline-flex flex-row w-[90%] place-content-center gap-6 ">
         <button onClick={onClick} className="h-[6vh] w-[6vh] max-h-[10vw] max-w-[10vw]">
-          <img className="h-[6vh] w-[6vh] max-h-[10vw] max-w-[10vw]" src={isFromGamePage ? restart : back} alt="" />
+          <img className="h-[6vh] w-[6vh] max-h-[10vw] max-w-[10vw]" src={isFromGamePage < 0 ? restart : back} alt="" />
           {/* 다시하기 or 뒤로가기 */}
         </button>
 
@@ -49,13 +48,13 @@ function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum })
             {/* 홈으로 */}
           </button>
         </Link>
-        <ShareResult isforOne={isforOne} resultString={resultString} img={img} isMobile />
+        <ShareResult isforOne={isforOne} resultString={resultString} img={img} isMobile id={id} />
       </div>
     );
   }
   return (
     <div className="flex flex-row justify-center space-x-[5%]">
-      <ShareResult isforOne={isforOne} resultString={resultString} img={img} isMobile={false} />
+      <ShareResult isforOne={isforOne} resultString={resultString} img={img} isMobile={false} id={id} />
 
       <button
         onClick={onClick}
@@ -63,7 +62,7 @@ function ResultButtons({ isforOne, resultString, img, isFromGamePage, userNum })
           py-[0.3rem] rounded-full whitespace-nowrap
       ${isforOne ? 'bg-primary-3 text-primary-1 hover:bg-primary' : 'bg-black text-primary'}`}
       >
-        {isFromGamePage ? '다시하기' : '뒤로가기'}
+        {isFromGamePage < 0 ? '다시하기' : '뒤로가기'}
       </button>
       <Link to="/" className="deskTop:w-[30%]">
         <button

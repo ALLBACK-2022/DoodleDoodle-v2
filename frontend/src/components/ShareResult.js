@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import '../assets/icons/smile.png';
 import share from '../assets/icons/share.png';
 
-function ShareResult({ resultString, isforOne, img, isMobile }) {
+function ShareResult({ resultString, isforOne, img, isMobile, id }) {
   const isShare = useRef(false);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ function ShareResult({ resultString, isforOne, img, isMobile }) {
         templateArgs: {
           ARGS: str,
           THU: img,
+          URL: `http://localhost/${isforOne ? 'resultone?draw-id=' : 'resultmany?game-id='}${id}`,
         },
       });
     }

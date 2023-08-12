@@ -16,6 +16,7 @@ function ResultMany() {
   const [randword, setRandword] = useState('');
   const [infoLoading, setInfoLoading] = useState(false);
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const gameId = useRef(-1);
 
   const isMobile = useMediaQuery({
@@ -25,15 +26,8 @@ function ResultMany() {
     query: '(min-width: 701px)',
   });
 
-  // storage의 값이 null일 때 sessionstorage에 저장, null이 아니면 sessionStorage에서 값 끌어오기
   function setGameid() {
-    const storageGameId = sessionStorage.getItem('gameId');
-    if (!storageGameId) {
-      window.sessionStorage.setItem('gameId', location.state.gameId);
-      gameId.current = location.state.gameId;
-    } else {
-      gameId.current = Number(storageGameId);
-    }
+    gameId.current = queryParams.get('game-id');
   }
 
   function setResultString(drawno, word, similarity) {
@@ -55,7 +49,6 @@ function ResultMany() {
     };
 
     await axios.get(getInfoURL + gameId.current.toString(), heders).then(response => {
-      console.log(response.data);
       setRandword(response.data.random_word);
       setPlayersInfo(response.data.results);
       setInfoLoading(loading => !loading);
@@ -101,6 +94,7 @@ function ResultMany() {
                 player={player.player_no}
                 key={player.draw_id}
                 drawid={player.draw_id}
+                gameId={gameId.current}
               />
             ))}
           </div>
@@ -119,6 +113,7 @@ function ResultMany() {
                 key={player.draw_id}
                 drawid={player.draw_id}
                 number={playersInfo.length}
+                gameId={gameId.current}
               />
             ))}
           </div>
@@ -131,10 +126,11 @@ function ResultMany() {
           >
             <ResultButtons
               isforOne={false}
-              isFromGamePage
+              isFromGamePage={-1}
               userNum={playersInfo.length}
               img={playersInfo[0].image_url}
               resultString={setResultString(playersInfo[0].player_no, randword, playersInfo[0].similarity)}
+              id={gameId.current}
             />
           </div>
         )}

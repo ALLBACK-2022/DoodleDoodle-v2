@@ -14,8 +14,6 @@ function MobileRandomBtn({ setWord, start, word }) {
   // 여기 수정하면  MobileRandomBtn.js도 수정
 
   async function goNextPage() {
-    window.sessionStorage.removeItem('gameId');
-
     const req = {
       id: location.state.gameID.id,
       korean_name: word,
