@@ -13,7 +13,7 @@ services:
     image: run
     environment:
       - REACT_APP_KAKAO_TOKEN=${REACT_APP_KAKAO_TOKEN}
-      - REACT_APP_BACKEND_URL=http://localhost:8080/api/v2
+      - REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
       - WDS_SOCKET_PORT=0
       - CI=true
     stdin_open: true
@@ -55,6 +55,8 @@ services:
     environment:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
+      DB_USERNAME: ${DB_USERNAME}
+      SPRING_PROFILES_ACTIVE: prod
     networks:
       - app-tier
     depends_on:
