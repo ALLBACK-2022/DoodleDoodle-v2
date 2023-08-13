@@ -31,7 +31,7 @@ function ShareResult({ resultString, isforOne, img, isMobile, id }) {
         templateArgs: {
           ARGS: str,
           THU: img,
-          URL: `http://localhost/${isforOne ? 'resultone?draw-id=' : 'resultmany?game-id='}${id}`,
+          URL: `${isforOne ? 'resultone?draw-id=' : 'resultmany?game-id='}${id}`,
         },
       });
     }
