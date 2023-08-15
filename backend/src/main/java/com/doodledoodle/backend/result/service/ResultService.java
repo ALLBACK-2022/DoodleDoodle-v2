@@ -25,7 +25,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ResultService implements EntityLoader<Result, Long> {
     private static final int RESULT_PER_PLAYER_SIZE = 6;
@@ -49,6 +48,7 @@ public class ResultService implements EntityLoader<Result, Long> {
         resultRepository.saveAll(results);
     }
 
+    @Transactional(readOnly = true)
     public DrawResultResponse getResultByDrawId(final Long drawId) {
         List<Result> results = resultRepository.findByDrawIdOrderBySimilarityDesc(drawId);
         if (results.isEmpty()) {
@@ -58,6 +58,7 @@ public class ResultService implements EntityLoader<Result, Long> {
         return resultMapper.toDrawResultResponse(draw, results);
     }
 
+    @Transactional(readOnly = true)
     public GameResultResponse getResultByGameId(final Long gameId) {
         List<Result> results = resultRepository.findByGameIdOrderBySimilarityDesc(gameId);
         Game game = gameService.loadEntity(gameId);

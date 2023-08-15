@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.global.exception.advice;
+package com.doodledoodle.backend.global.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,4 +15,3 @@ public class ErrorAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 }
-

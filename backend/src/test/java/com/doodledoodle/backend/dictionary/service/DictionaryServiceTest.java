@@ -5,7 +5,7 @@ import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
 import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.support.database.DatabaseTest;
-import com.doodledoodle.backend.util.RandomGenerator;
+import com.doodledoodle.backend.utils.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

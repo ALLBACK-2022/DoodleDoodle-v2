@@ -19,6 +19,7 @@ public class DrawKafkaRequest {
         this.englishName = englishName;
         convertFile(file);
     }
+
     private void convertFile(MultipartFile file) {
         try {
             this.file = Base64.getEncoder().encodeToString(file.getBytes());

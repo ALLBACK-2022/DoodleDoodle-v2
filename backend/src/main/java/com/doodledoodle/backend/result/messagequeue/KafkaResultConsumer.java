@@ -21,9 +21,14 @@ public class KafkaResultConsumer implements KafkaConsumer<ResultKafkaResponse> {
     ObjectMapper objectMapper;
 
     @Transactional
-    @SneakyThrows(JsonProcessingException.class)
     @KafkaListener(topics = "doodledoodle.to.backend.result", containerFactory = "kafkaListenerContainerFactory")
     public void consume(String message) {
-        resultService.saveResults(objectMapper.readValue(message, ResultKafkaResponse.class));
+        resultService.saveResults(readMessage(message));
+    }
+
+    @Override
+    @SneakyThrows(JsonProcessingException.class)
+    public ResultKafkaResponse readMessage(final String message) {
+        return objectMapper.readValue(message, ResultKafkaResponse.class);
     }
 }
