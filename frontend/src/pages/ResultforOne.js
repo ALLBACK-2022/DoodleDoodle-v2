@@ -22,6 +22,7 @@ function ResultforOne() {
   const defaultData = { name: '?', value: 0.0 };
 
   const location = useLocation();
+  const isFromGamePage = location.state?.isFromGamePage ? location.state.isFromGamePage : -1;
   const queryParams = new URLSearchParams(location.search);
   const drawId = queryParams.get('draw-id');
 
@@ -159,7 +160,7 @@ function ResultforOne() {
             <ResultOneSketchBook
               randomWordData={randomWordData}
               isPC={isPC}
-              isFromGamePage={location.state.isFromGamePage}
+              isFromGamePage={isFromGamePage}
               text={setResultString(randomWordData.name, randomWordData.value)}
               id={drawId}
             />
@@ -169,7 +170,7 @@ function ResultforOne() {
           <div className="absolute text-center bottom-[9vh] items-center w-[92vw]">
             <ResultButtons
               isforOne
-              isFromGamePage={location.state.isFromGamePage}
+              isFromGamePage={isFromGamePage}
               userNum={1}
               img={randomWordData.imageUrl}
               resultString={setResultString(randomWordData.name, randomWordData.value)}
