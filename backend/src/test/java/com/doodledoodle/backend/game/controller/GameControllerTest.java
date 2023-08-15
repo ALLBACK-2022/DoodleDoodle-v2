@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.doodledoodle.backend.game.dto.request.GameRequest;
 import com.doodledoodle.backend.game.dto.request.GameWordRequest;
 import com.doodledoodle.backend.game.dto.response.GameWordResponse;
+import com.doodledoodle.backend.game.service.GameService;
 import com.doodledoodle.backend.game.service.GameServiceImpl;
 import com.doodledoodle.backend.global.dto.IdResponse;
 import com.doodledoodle.backend.support.docs.RestDocumentTest;
@@ -26,8 +27,8 @@ import java.util.UUID;
 
 @DisplayName("Game 컨트롤러의")
 @WebMvcTest(GameController.class)
-public class GameControllerTest extends RestDocumentTest {
-    @MockBean private GameServiceImpl gameService;
+class GameControllerTest extends RestDocumentTest {
+    @MockBean private GameService gameService;
 
     @Test
     @DisplayName("인원수가 저장되는 API가 수행되는가")
@@ -66,7 +67,7 @@ public class GameControllerTest extends RestDocumentTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         toRequestBody(
-                                            new GameWordRequest(1L,"스케이트보드"))));
+                                            new GameWordRequest(UUID.randomUUID(),"스케이트보드"))));
         //then
         perform.andExpect(status().isOk());
 

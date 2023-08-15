@@ -6,6 +6,7 @@ import com.doodledoodle.backend.game.dto.request.GameRequest;
 import com.doodledoodle.backend.game.dto.request.GameWordRequest;
 import com.doodledoodle.backend.game.dto.response.GameWordResponse;
 import com.doodledoodle.backend.game.entity.Game;
+import com.doodledoodle.backend.game.repository.GameRepository;
 import com.doodledoodle.backend.game.repository.GameRepositoryStandard;
 import com.doodledoodle.backend.global.dto.IdResponse;
 import com.doodledoodle.backend.support.database.DatabaseTest;
@@ -17,10 +18,10 @@ import java.util.UUID;
 
 @DatabaseTest
 @DisplayName("Game 서비스의")
-public class GameServiceTest {
+class GameServiceTest {
 
-    @Autowired private GameServiceImpl gameService;
-    @Autowired private GameRepositoryStandard gameRepository;
+    @Autowired private GameService gameService;
+    @Autowired private GameRepository gameRepository;
 
     @Test
     @DisplayName("인원수가 저장되는가")
@@ -32,9 +33,9 @@ public class GameServiceTest {
         IdResponse<UUID> response = gameService.createGame(new GameRequest(playerNum));
 
         //then
-        Game gameEntity = gameRepository.findById(response.getId()).orElseThrow();
+        Game game = gameRepository.findById(response.getId()).orElseThrow();
 
-        assertThat(response.getId()).isEqualTo(gameEntity.getId());
+        assertThat(response.getId()).isEqualTo(game.getId());
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GameServiceTest {
         GameWordResponse response = gameService.saveWord(request);
 
         //then
-        Game gameEntity = gameRepository.findById(game.getId()).orElseThrow();
-        assertThat(response.getEnglishName()).isEqualTo(gameEntity.getDictionary().getEnglishName());
+        Game findGame = gameRepository.findById(game.getId()).orElseThrow();
+        assertThat(response.getEnglishName()).isEqualTo(findGame.getDictionary().getEnglishName());
     }
 }
