@@ -8,20 +8,15 @@ import java.util.Optional;
 
 public class AuditListener {
     @PrePersist
-    public void setCreatedAt(Auditable auditable) {
-        BaseTime baseTime = Optional.ofNullable(auditable.getBaseTime()).orElseGet(BaseTime::new);
+    public void setCreatedAt(final Auditable auditable) {
+        final BaseTime baseTime = Optional.ofNullable(auditable.getBaseTime()).orElseGet(BaseTime::new);
         baseTime.setCreatedAt(LocalDateTime.now());
         auditable.setBaseTime(baseTime);
     }
 
     @PreUpdate
-    public void setUpdatedAt(Auditable auditable) {
-        BaseTime baseTime = auditable.getBaseTime();
+    public void setUpdatedAt(final Auditable auditable) {
+        final BaseTime baseTime = auditable.getBaseTime();
         baseTime.setUpdatedAt(LocalDateTime.now());
-    }
-
-    @PreRemove
-    public void setDeleteAt(Auditable auditable) {
-        auditable.getBaseTime().setDeletedAt(LocalDateTime.now());
     }
 }

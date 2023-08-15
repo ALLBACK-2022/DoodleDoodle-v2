@@ -11,7 +11,7 @@ import java.io.IOException;
 @RestControllerAdvice
 public class DrawErrorAdvice {
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<ErrorResponse> ioException(IOException e) {
+    public ResponseEntity<ErrorResponse> ioException(final IOException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 }

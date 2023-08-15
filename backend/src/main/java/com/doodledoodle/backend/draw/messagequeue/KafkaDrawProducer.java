@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class KafkaDrawProducer implements KafkaProducer<DrawKafkaRequest> {
     KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void send(DrawKafkaRequest request) {
+    public void send(final DrawKafkaRequest request) {
         kafkaTemplate.send("doodledoodle.to.ai.draw", "draw", request);
     }
 }

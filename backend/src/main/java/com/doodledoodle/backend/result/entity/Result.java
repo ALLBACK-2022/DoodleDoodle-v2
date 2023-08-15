@@ -7,26 +7,29 @@ import com.doodledoodle.backend.global.audit.AuditListener;
 import com.doodledoodle.backend.global.audit.Auditable;
 import com.doodledoodle.backend.global.audit.BaseTime;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Getter
 @Entity
-@EqualsAndHashCode(of = {"dictionary", "draw"})
+@EqualsAndHashCode(of = "draw")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Result implements Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private Double similarity;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
     private Dictionary dictionary;
+
+    @Column(nullable = false)
+    private Double similarity;
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,9 +45,9 @@ public class Result implements Auditable {
     private BaseTime baseTime;
 
     @Builder
-    public Result(Double similarity, Dictionary dictionary, Game game, Draw draw) {
-        this.similarity = similarity;
+    public Result(final Dictionary dictionary, final Double similarity, final Game game, final Draw draw) {
         this.dictionary = dictionary;
+        this.similarity = similarity;
         this.game = game;
         this.draw = draw;
     }

@@ -1,7 +1,7 @@
 package com.doodledoodle.backend.global.kafka;
 
 public interface KafkaConsumer<T> {
-    void consume(String message);
+    void consume(final String message);
 
-    T readMessage(String message);
+    T readMessage(final String message);
 }

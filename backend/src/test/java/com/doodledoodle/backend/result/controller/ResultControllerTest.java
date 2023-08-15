@@ -14,7 +14,7 @@ import com.doodledoodle.backend.result.dto.response.DictionaryResultResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.dto.response.UserResultResponse;
-import com.doodledoodle.backend.result.service.ResultService;
+import com.doodledoodle.backend.result.service.ResultServiceImpl;
 import com.doodledoodle.backend.support.docs.RestDocumentTest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @DisplayName("Result 컨트롤러의")
 @WebMvcTest(ResultController.class)
 class ResultControllerTest extends RestDocumentTest {
-    @MockBean private ResultService resultService;
+    @MockBean private ResultServiceImpl resultService;
 
     @Test
     @DisplayName("Game PK를 통한 조회가 수행되는가")

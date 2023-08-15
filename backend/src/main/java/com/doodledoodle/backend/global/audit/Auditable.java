@@ -3,5 +3,5 @@ package com.doodledoodle.backend.global.audit;
 public interface Auditable {
     BaseTime getBaseTime();
 
-    void setBaseTime(BaseTime baseTime);
+    void setBaseTime(final BaseTime baseTime);
 }

@@ -2,6 +2,7 @@ package com.doodledoodle.backend.dictionary.controller;
 
 import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.service.DictionaryService;
+import com.doodledoodle.backend.dictionary.service.DictionaryServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

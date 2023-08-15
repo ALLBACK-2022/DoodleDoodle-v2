@@ -36,25 +36,27 @@ services:
     restart: on-failure
     container_name: db
     ports:
-      - 5433:5432
-    environment: 
+      - 5432:5432
+    environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+      POSTGRES_DB: ${DB_SCHEMA}
+    volumes:
+      - postgresql_database:/var/lib/postgresql/data
     networks:
       - app-tier
 
   backend:
-    env_file:
-      .env
     build:
       context: ./backend
-    command: gradle bootRun
     container_name: backend
     ports:  
       - 8080:8080
     environment:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_SCHEMA: ${DB_SCHEMA}
       DB_USER_PASSWORD: ${DB_USER_PASSWORD}
       SPRING_PROFILES_ACTIVE: prod
     networks:
@@ -129,3 +131,4 @@ networks:
 
 volumes:
   build_frontend: null
+  postgresql_database: null

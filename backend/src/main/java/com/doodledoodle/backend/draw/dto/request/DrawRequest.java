@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @Getter
 @AllArgsConstructor
 public class DrawRequest {
-    private Long gameId;
+    private UUID gameId;
     private Integer playerNo;
     private MultipartFile file;
 }

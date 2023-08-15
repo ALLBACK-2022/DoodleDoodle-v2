@@ -1,21 +1,19 @@
 package com.doodledoodle.backend.result.dto.collection;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Set;
 
-@Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SimilarityMap {
-    private Map<String, Double> similarities;
+    private final Map<String, Double> similarityMap;
 
-    public Set<String> getKeySet() {
-        return similarities.keySet();
+    public Double getSimilarityByEnglishName(final String englishName) {
+        return similarityMap.get(englishName);
     }
 
-    public Double getSimilarityByKey(String key) {
-        return similarities.get(key);
+    public Set<String> getKeySet() {
+        return similarityMap.keySet();
     }
 }

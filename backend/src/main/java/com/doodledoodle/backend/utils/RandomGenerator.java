@@ -9,7 +9,7 @@ import java.util.Random;
 @Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RandomGenerator {
-    private final Random random;
+    Random random;
 
     public RandomGenerator() {
         random = new Random();

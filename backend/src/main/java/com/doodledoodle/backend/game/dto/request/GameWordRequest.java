@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameWordRequest {
     @NotNull
-    private Long id;
+    private UUID id;
     @NotNull
     private String koreanName;
 }

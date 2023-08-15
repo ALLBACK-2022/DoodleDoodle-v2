@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
-import com.doodledoodle.backend.draw.service.DrawService;
+import com.doodledoodle.backend.draw.service.DrawServiceImpl;
 import com.doodledoodle.backend.support.docs.RestDocumentTest;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebMvcTest(DrawController.class)
 public class DrawControllerTest extends RestDocumentTest {
 
-    @MockBean private DrawService drawService;
+    @MockBean private DrawServiceImpl drawService;
 
     @Test
     @DisplayName("그림을 저장하는 API가 수행되는가")

@@ -1,11 +1,25 @@
 package com.doodledoodle.backend.game.repository;
 
 import com.doodledoodle.backend.game.entity.Game;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface GameRepository {
-    Game save(Game game);
+@Repository
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class GameRepository {
+    GameRepositoryStandard gameRepositoryStandard;
 
-    Optional<Game> findById(Long id);
+    public Game save(final Game game) {
+        return gameRepositoryStandard.save(game);
+    }
+
+    public Optional<Game> findById(final UUID id) {
+        return gameRepositoryStandard.findById(id);
+    }
 }

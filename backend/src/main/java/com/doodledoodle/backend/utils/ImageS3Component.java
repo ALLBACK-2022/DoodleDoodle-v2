@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -23,9 +24,9 @@ public class ImageS3Component {
     S3StorageProperties s3StorageProperties;
     AmazonS3Client amazonS3Client;
 
-    public String uploadAndGetUrl(final MultipartFile file, final Long drawId) throws IOException {
-        String fileName = getFileName(file, drawId);
-        ObjectMetadata data = new ObjectMetadata();
+    public String uploadAndGetUrl(final MultipartFile file, final UUID drawId) throws IOException {
+        final String fileName = getFileName(file, drawId);
+        final ObjectMetadata data = new ObjectMetadata();
         data.setContentType(fileName);
         data.setContentLength(file.getSize());
 
@@ -40,7 +41,7 @@ public class ImageS3Component {
         return amazonS3Client.getUrl(s3StorageProperties.getBucket(), fileName).toString();
     }
 
-    private String getFileName(final MultipartFile file, final Long drawId) {
+    private String getFileName(final MultipartFile file, final UUID drawId) {
         return String.join("", MAIN_DIRECTORY, drawId.toString(),
                 FILE_EXTENSION_SPLITTER, StringUtils.getFilenameExtension(file.getOriginalFilename()));
     }

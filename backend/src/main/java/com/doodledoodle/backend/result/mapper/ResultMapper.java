@@ -5,7 +5,6 @@ import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
 import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
-import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
 import com.doodledoodle.backend.result.dto.response.DictionaryResultResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
@@ -18,22 +17,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class ResultMapper {
-    public Result toEntity(final Double similarity, final Draw draw, final Dictionary dictionary, final Game game) {
+    public Result toEntity(final Dictionary dictionary, final Double similarity, final Draw draw, final Game game) {
         return Result.builder()
+                .dictionary(dictionary)
                 .similarity(similarity)
                 .draw(draw)
-                .dictionary(dictionary)
                 .game(game)
                 .build();
     }
 
-    public List<Result> toEntityList(final SimilarityMap similarityMap, final Draw draw, final Game game, final DictionaryMap dictionaryMap) {
-        return similarityMap.getKeySet().stream()
-                .map(key -> toEntity(
-                        similarityMap.getSimilarityByKey(key),
-                        draw,
-                        dictionaryMap.getDictionaryByKey(key),
-                        game))
+    public List<Result> toEntityList(final DictionaryMap dictionaryMap, final Draw draw) {
+        return dictionaryMap.getKeySet().stream()
+                .map(key -> toEntity(key, dictionaryMap.getSimilarityByKey(key), draw, draw.getGame()))
                 .collect(Collectors.toList());
     }
 
@@ -58,10 +53,6 @@ public class ResultMapper {
                 .build();
     }
 
-    public DrawResultResponse toEmptyDrawResponse() {
-        return DrawResultResponse.builder().build();
-    }
-
     public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
         Result randomWordResult = toRandomWordResult(draw, results);
         return DrawResultResponse.builder()
@@ -79,15 +70,16 @@ public class ResultMapper {
 
     private Result toRandomWordResult(final Draw draw, final List<Result> results) {
         return results.stream()
-                .filter(r -> r.getDictionary().getEnglishName().equals(draw.getGame().getEnglishName()))
-                .findFirst()
+                .filter(r -> r.getDictionary().getEnglishName().equals(draw.getGame().getDictionary().getEnglishName()))
+                .findAny()
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     public GameResultResponse toGameResultResponse(final Game game, final List<Result> results) {
+        Dictionary dictionary = game.getDictionary();
         return GameResultResponse.builder()
-                .randomWord(game.getEnglishName())
-                .results(toUserResultResponseList(game.getEnglishName(), results))
+                .randomWord(dictionary.getKoreanName())
+                .results(toUserResultResponseList(dictionary.getEnglishName(), results))
                 .build();
     }
 
@@ -106,9 +98,5 @@ public class ResultMapper {
                 toDictionaryResultResponse(results.get(2)),
                 toDictionaryResultResponse(results.get(3)),
                 toDictionaryResultResponse(results.get(4)));
-    }
-
-    public GameResultResponse toEmptyGameResponse() {
-        return GameResultResponse.builder().build();
     }
 }
