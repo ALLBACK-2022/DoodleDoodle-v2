@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @AllArgsConstructor
 public class UserResultResponse {
-    private Long drawId;
+    private UUID drawId;
     private Integer playerNo;
     private String imageUrl;
     private Double similarity;

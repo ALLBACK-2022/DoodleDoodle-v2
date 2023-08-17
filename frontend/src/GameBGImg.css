@@ -1,0 +1,54 @@
+#gameBGImg{
+    -webkit-user-drag: none; /* 이미지 드래그 방지 */
+}
+
+/* #BGyellowImg{
+    width: 100vw;
+    height: 100vh;
+    background: url("./assets/icons/BGyellowImg.png");
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+#mobileBGImg{
+    width: 100vw;
+    height: 100vh;
+    background: url("./assets/icons/mobileBGImg.png");
+    background-size: 100% 100%;
+    background-position: center;
+} */
+
+.sketchbook {
+    background: url("./assets/icons/sketchbook.png");
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+@media(max-width: 700px){ /* 모바일 화면 */
+    #gameBGImg{
+        content: url(assets/icons/mobileBGImg.png);
+    }
+    #resultManyBG{
+        content: url(assets/icons/mobileBGImg.png);
+    }
+}
+
+@media(min-width: 701px){ /* PC 및 가로화면 */
+    #gameBGImg{
+        height: 100vh;
+        padding-right: 2vw;
+        padding-left: 2vw;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+        content: url(assets/icons/gameBGImg.png);
+    }
+
+    #resultManyBG{
+        height: 100vh;
+        padding-right: 2vw;
+        padding-left: 2vw;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+        content: url(assets/icons/BGyellowImg.png);
+    }
+}

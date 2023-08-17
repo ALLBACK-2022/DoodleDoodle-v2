@@ -1,6 +1,9 @@
 package com.doodledoodle.backend.dictionary.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,10 +11,11 @@ import javax.persistence.*;
 @Entity
 @EqualsAndHashCode(of = "englishName")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes =
+        {@Index(name = "korean_name_index", columnList = "koreanName"),
+                @Index(name = "english_name_index", columnList = "englishName")})
 public class Dictionary {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -22,11 +26,4 @@ public class Dictionary {
 
     @Column(unique = true, nullable = false)
     private String imageUrl;
-
-    @Builder
-    public Dictionary(String koreanName, String englishName, String imageUrl) {
-        this.koreanName = koreanName;
-        this.englishName = englishName;
-        this.imageUrl = imageUrl;
-    }
 }

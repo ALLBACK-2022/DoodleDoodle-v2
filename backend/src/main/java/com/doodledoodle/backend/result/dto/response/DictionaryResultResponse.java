@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @AllArgsConstructor
 public class DictionaryResultResponse {
-    private Long id;
+    private UUID id;
     private Double similarity;
     private String koreanName;
     private String englishName;

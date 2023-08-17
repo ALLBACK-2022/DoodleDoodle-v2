@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,14 +26,14 @@ public class GameController {
     GameService gameService;
 
     @PostMapping
-    public ResponseEntity<IdResponse<Long>> createGame(
-            @Valid @RequestBody GameRequest requestDto) {
-        return ResponseEntity.ok(gameService.createGame(requestDto));
+    public ResponseEntity<IdResponse<UUID>> createGame(
+            @Valid @RequestBody final GameRequest gameRequest) {
+        return ResponseEntity.ok(gameService.createGame(gameRequest));
     }
 
     @PostMapping("random-words")
     public ResponseEntity<GameWordResponse> saveWord(
-            @Valid @RequestBody GameWordRequest requestDto) {
-        return ResponseEntity.ok(gameService.saveWord(requestDto));
+            @Valid @RequestBody final GameWordRequest gameWordRequest) {
+        return ResponseEntity.ok(gameService.saveWord(gameWordRequest));
     }
 }

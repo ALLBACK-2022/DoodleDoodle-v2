@@ -11,8 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.service.DrawService;
+import com.doodledoodle.backend.draw.service.DrawServiceImpl;
 import com.doodledoodle.backend.support.docs.RestDocumentTest;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +26,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 @DisplayName("Draw 컨트롤러의")
 @WebMvcTest(DrawController.class)
-public class DrawControllerTest extends RestDocumentTest {
+class DrawControllerTest extends RestDocumentTest {
 
     @MockBean private DrawService drawService;
 
@@ -31,12 +34,11 @@ public class DrawControllerTest extends RestDocumentTest {
     @DisplayName("그림을 저장하는 API가 수행되는가")
     void saveDraw() throws Exception {
         //given
-        MockMultipartFile image = new MockMultipartFile("images", "image.png", "MediaType.IMAGE_JPEG_VALUE", "Image".getBytes(StandardCharsets.UTF_8));
-        DrawResponse expected = new DrawResponse(1L);
+        DrawResponse expected = new DrawResponse(UUID.randomUUID());
         given(drawService.saveDraw(any(), any(), any())).willReturn(expected);
         ResultActions perform =
                 mockMvc.perform(
-                                post("/draws/games/1/player-no/1")
+                                post("/draws/games/" + UUID.randomUUID() + "/player-no/1")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(
                                         toRequestBody(

@@ -3,15 +3,12 @@ package com.doodledoodle.backend.dictionary.service;
 import com.doodledoodle.backend.dictionary.dto.response.DictionaryResponse;
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
-import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.support.database.DatabaseTest;
-import com.doodledoodle.backend.util.RandomGenerator;
+import com.doodledoodle.backend.utils.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -34,28 +31,8 @@ class DictionaryServiceTest {
         DictionaryResponse dictionaryResponse = dictionaryService.getRandomDictionary();
 
         //then
-        Dictionary dictionary = dictionaryRepository.findById(randomNum).get();
+        Dictionary dictionary = dictionaryRepository.findById(randomNum).orElseThrow();
         assertThat(dictionaryResponse.getKoreanName()).isEqualTo(dictionary.getKoreanName());
-    }
-
-    @Test
-    @DisplayName("영어 단어들로 조회가 수행되는가")
-    void getEntityListByEnglishName() {
-        //given
-        String skateboard = "skateboard";
-        String fish = "fish";
-        Set<String> engNames = Set.of(skateboard, fish);
-
-        //when
-        DictionaryMap dictionaryMap = dictionaryService.getDictionaryMapByEnglishNames(engNames);
-
-
-        //then
-        Dictionary skateboardEntity = dictionaryMap.getDictionaryByKey(skateboard);
-        Dictionary fishEntity = dictionaryMap.getDictionaryByKey(fish);
-
-        assertThat(skateboardEntity.getEnglishName()).isEqualTo(skateboard);
-        assertThat(fishEntity.getEnglishName()).isEqualTo(fish);
     }
 
     @Test

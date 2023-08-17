@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResultKafkaResponse {
-    private Long drawId;
+    private UUID drawId;
     private Map<String, Double> result;
     private Map<String, Double> topFive;
 }

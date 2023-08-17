@@ -1,12 +1,15 @@
-package com.doodledoodle.backend.util;
+package com.doodledoodle.backend.utils;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RandomGenerator {
-    private final Random random;
+    Random random;
 
     public RandomGenerator() {
         random = new Random();

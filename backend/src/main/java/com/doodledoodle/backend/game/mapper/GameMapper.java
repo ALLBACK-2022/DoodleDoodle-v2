@@ -16,7 +16,7 @@ public class GameMapper {
 
     public GameWordResponse toResponse(final Game game) {
         return GameWordResponse.builder()
-                .englishName(game.getEnglishName())
+                .englishName(game.getDictionary().getEnglishName())
                 .build();
     }
 }

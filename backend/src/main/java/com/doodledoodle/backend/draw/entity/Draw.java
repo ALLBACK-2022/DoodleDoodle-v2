@@ -5,20 +5,23 @@ import com.doodledoodle.backend.global.audit.AuditListener;
 import com.doodledoodle.backend.global.audit.Auditable;
 import com.doodledoodle.backend.global.audit.BaseTime;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Getter
 @Entity
-@Where(clause = "deleted_at is null")
+@EqualsAndHashCode(of = "imageUrl")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Draw implements Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
     private String imageUrl;
 
@@ -35,13 +38,13 @@ public class Draw implements Auditable {
     private BaseTime baseTime;
 
     @Builder
-    public Draw(String imageUrl, Game game, Integer playerNo) {
+    public Draw(final String imageUrl, final Game game, final Integer playerNo) {
         this.imageUrl = imageUrl;
         this.game = game;
         this.playerNo = playerNo;
     }
 
-    public void updateImgUrl(String imgUrl) {
+    public void updateImgUrl(final String imgUrl) {
         this.imageUrl = imgUrl;
     }
 }
