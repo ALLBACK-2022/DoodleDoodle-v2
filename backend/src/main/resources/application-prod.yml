@@ -56,3 +56,9 @@ cloud:
       auto: false
     stack:
       auto: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
