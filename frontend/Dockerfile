@@ -7,6 +7,4 @@ RUN npm install
 ARG API_URL
 ENV REACT_APP_HOST_IP_ADDRESS $API_URL
 
-COPY . ./
-
-CMD ["npm", "run", "build"]
+RUN npm run build
