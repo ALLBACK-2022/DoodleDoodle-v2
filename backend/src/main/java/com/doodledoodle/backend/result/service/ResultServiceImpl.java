@@ -29,7 +29,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ResultServiceImpl implements ResultService {
-    private static final int RESULT_PER_PLAYER_SIZE = 6;
     ResultRepository resultRepository;
     ResultMapper resultMapper;
     DictionaryService dictionaryService;
@@ -75,10 +74,16 @@ public class ResultServiceImpl implements ResultService {
         final List<Result> results = resultRepository.findByGameId(gameId);
         final Game game = gameService.loadEntity(gameId);
 
-        if (results.size() != game.getPlayerNum() * RESULT_PER_PLAYER_SIZE) {
+        if (noLastPlayerResult(results, game)) {
             throw new GameResultNotFoundException();
         }
         return resultMapper.toGameResultResponse(game, results);
+    }
+
+    private boolean noLastPlayerResult(final List<Result> results, final Game game) {
+        return results.stream()
+                .map(Result::getDraw)
+                .noneMatch(d -> d.getPlayerNo().intValue() == game.getPlayerNum().intValue());
     }
 
     @Override
