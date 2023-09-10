@@ -1,0 +1,21 @@
+name: Doodle Backend CD
+on:
+ push:
+   branches:
+     - "main"
+     
+jobs:
+  server-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/DoodleDoodle-v2
+            git pull
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up --build -d

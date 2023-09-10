@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS dictionary;
 
+CREATE TABLE dictionary;
+
 insert into dictionary(id, korean_name, english_name, image_url) values
                                                                     (1, '알람 시계', 'alarm_clock', 'https://doodle-bucket.s3.ap-northeast-2.amazonaws.com/image/alarm_clock.png'),
                                                                     (2, '확성기', 'megaphone', 'https://doodle-bucket.s3.ap-northeast-2.amazonaws.com/image/megaphone.png'),
