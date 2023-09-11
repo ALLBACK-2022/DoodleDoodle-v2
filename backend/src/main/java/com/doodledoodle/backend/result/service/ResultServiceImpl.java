@@ -40,11 +40,8 @@ public class ResultServiceImpl implements ResultService {
     public void saveResults(final ResultKafkaResponse resultKafkaResponse) {
         final Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
 
-        final DrawSimilarity randomWordDrawSimilarity = new DrawSimilarity(resultKafkaResponse.getResult());
-        final DrawSimilarity topFiveDrawSimilarity = new DrawSimilarity(resultKafkaResponse.getTopFive());
-
-        saveAllResult(randomWordDrawSimilarity, draw);
-        saveAllResult(topFiveDrawSimilarity, draw);
+        saveAllResult(new DrawSimilarity(resultKafkaResponse.getResult()), draw);
+        saveAllResult(new DrawSimilarity(resultKafkaResponse.getTopFive()), draw);
     }
 
     private void saveAllResult(final DrawSimilarity drawSimilarity, final Draw draw) {
