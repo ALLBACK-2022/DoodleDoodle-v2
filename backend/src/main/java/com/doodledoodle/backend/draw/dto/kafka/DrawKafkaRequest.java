@@ -1,5 +1,6 @@
 package com.doodledoodle.backend.draw.dto.kafka;
 
+import com.doodledoodle.backend.draw.exception.InvalidFileConvertException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,13 +19,14 @@ public class DrawKafkaRequest {
     public DrawKafkaRequest(UUID drawId, String englishName, MultipartFile file) {
         this.drawId = drawId;
         this.englishName = englishName;
-        convertFile(file);
+        this.file = convertFileToString(file);
     }
 
-    private void convertFile(MultipartFile file) {
+    private String convertFileToString(MultipartFile file) {
         try {
-            this.file = Base64.getEncoder().encodeToString(file.getBytes());
+            return Base64.getEncoder().encodeToString(file.getBytes());
         } catch (IOException e) {
+            throw new InvalidFileConvertException();
         }
     }
 }

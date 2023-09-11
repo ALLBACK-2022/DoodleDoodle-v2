@@ -41,7 +41,7 @@ public class LogIntroduction {
     }
 
     @Before("allConsumer() || allProducer()")
-    public void consumerAndLog(final JoinPoint joinPoint) {
+    public void consumerAndProducerLog(final JoinPoint joinPoint) {
         logging(joinPoint, log::debug);
     }
 

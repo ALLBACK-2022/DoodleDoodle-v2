@@ -1,4 +1,4 @@
-package com.doodledoodle.backend.result.dto.collection;
+package com.doodledoodle.backend.result.entity.collection;
 
 import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import lombok.Getter;
@@ -9,15 +9,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
-public class EnglishNameMap {
+public class EnglishNames {
     private final Map<String, Dictionary> englishNameMap;
 
-    public EnglishNameMap(final List<Dictionary> dictionaries) {
+    public EnglishNames(final List<Dictionary> dictionaries) {
         this.englishNameMap = dictionaries.stream()
                 .collect(Collectors.toMap(Dictionary::getEnglishName, Function.identity()));
     }
 
-    public Dictionary getByKey(final String key) {
+    public Dictionary getDictionaryByEnglishName(final String key) {
         return englishNameMap.get(key);
     }
 }

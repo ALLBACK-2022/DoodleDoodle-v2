@@ -15,11 +15,11 @@ import java.util.UUID;
 public class DrawRepository {
     DrawRepositoryStandard drawRepositoryStandard;
 
-    public Optional<Draw> findById(UUID id) {
+    public Optional<Draw> findById(final UUID id) {
         return drawRepositoryStandard.findById(id);
     }
 
-    public Draw save(Draw draw) {
+    public Draw save(final Draw draw) {
         return drawRepositoryStandard.save(draw);
     }
 }

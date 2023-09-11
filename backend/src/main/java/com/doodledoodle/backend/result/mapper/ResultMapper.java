@@ -4,12 +4,12 @@ import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
-import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
 import com.doodledoodle.backend.result.dto.response.DictionaryResultResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.dto.response.UserResultResponse;
 import com.doodledoodle.backend.result.entity.Result;
+import com.doodledoodle.backend.result.entity.collection.DictionarySimilarity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,9 +26,9 @@ public class ResultMapper {
                 .build();
     }
 
-    public List<Result> toEntityList(final DictionaryMap dictionaryMap, final Draw draw) {
-        return dictionaryMap.getKeySet().stream()
-                .map(key -> toEntity(key, dictionaryMap.getSimilarityByKey(key), draw, draw.getGame()))
+    public List<Result> toEntityList(final DictionarySimilarity dictionarySimilarity, final Draw draw) {
+        return dictionarySimilarity.getDictionaries().stream()
+                .map(key -> toEntity(key, dictionarySimilarity.getSimilarityByDictionary(key), draw, draw.getGame()))
                 .collect(Collectors.toList());
     }
 

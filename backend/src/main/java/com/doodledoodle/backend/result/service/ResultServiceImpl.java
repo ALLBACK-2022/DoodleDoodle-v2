@@ -5,13 +5,13 @@ import com.doodledoodle.backend.draw.entity.Draw;
 import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.EntityLoader;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
-import com.doodledoodle.backend.result.dto.collection.EnglishNameMap;
-import com.doodledoodle.backend.result.dto.collection.DictionaryMap;
-import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
 import com.doodledoodle.backend.result.dto.kafka.ResultKafkaResponse;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.entity.Result;
+import com.doodledoodle.backend.result.entity.collection.DictionarySimilarity;
+import com.doodledoodle.backend.result.entity.collection.DrawSimilarity;
+import com.doodledoodle.backend.result.entity.collection.EnglishNames;
 import com.doodledoodle.backend.result.exception.DrawResultNotFoundException;
 import com.doodledoodle.backend.result.exception.GameResultNotFoundException;
 import com.doodledoodle.backend.result.mapper.ResultMapper;
@@ -40,20 +40,20 @@ public class ResultServiceImpl implements ResultService {
     public void saveResults(final ResultKafkaResponse resultKafkaResponse) {
         final Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
 
-        final SimilarityMap randomWordSimilarityMap = new SimilarityMap(resultKafkaResponse.getResult());
-        final SimilarityMap topFiveSimilarityMap = new SimilarityMap(resultKafkaResponse.getTopFive());
+        final DrawSimilarity randomWordDrawSimilarity = new DrawSimilarity(resultKafkaResponse.getResult());
+        final DrawSimilarity topFiveDrawSimilarity = new DrawSimilarity(resultKafkaResponse.getTopFive());
 
-        saveAllResult(randomWordSimilarityMap, draw);
-        saveAllResult(topFiveSimilarityMap, draw);
+        saveAllResult(randomWordDrawSimilarity, draw);
+        saveAllResult(topFiveDrawSimilarity, draw);
     }
 
-    private void saveAllResult(final SimilarityMap similarityMap, final Draw draw) {
-        final EnglishNameMap englishNameMap = dictionaryService.getDictionaryMapByEnglishNames(similarityMap);
-        final DictionaryMap dictionaryMap = new DictionaryMap(similarityMap, englishNameMap);
-        saveAllByDictionaryMap(draw, dictionaryMap);
+    private void saveAllResult(final DrawSimilarity drawSimilarity, final Draw draw) {
+        final EnglishNames englishNames = dictionaryService.getDictionaryMapByEnglishNames(drawSimilarity);
+        final DictionarySimilarity dictionarySimilarity = new DictionarySimilarity(drawSimilarity, englishNames);
+        saveAllByDictionarySimilarity(draw, dictionarySimilarity);
     }
 
-    private void saveAllByDictionaryMap(final Draw draw, final DictionaryMap similarityMap) {
+    private void saveAllByDictionarySimilarity(final Draw draw, final DictionarySimilarity similarityMap) {
         final List<Result> results = resultMapper.toEntityList(similarityMap, draw);
         resultRepository.saveAll(results);
     }
@@ -62,11 +62,15 @@ public class ResultServiceImpl implements ResultService {
     @Transactional(readOnly = true)
     public DrawResultResponse getResultByDrawId(final UUID drawId) {
         final List<Result> results = resultRepository.findByDrawId(drawId);
+        validateEmptyResult(results);
+        final Draw draw = drawService.loadEntity(drawId);
+        return resultMapper.toDrawResultResponse(draw, results);
+    }
+
+    private void validateEmptyResult(final List<Result> results) {
         if (results.isEmpty()) {
             throw new DrawResultNotFoundException();
         }
-        final Draw draw = drawService.loadEntity(drawId);
-        return resultMapper.toDrawResultResponse(draw, results);
     }
 
     @Override
@@ -75,10 +79,18 @@ public class ResultServiceImpl implements ResultService {
         final List<Result> results = resultRepository.findByGameId(gameId);
         final Game game = gameService.loadEntity(gameId);
 
-        if (results.size() != game.getPlayerNum() * RESULT_PER_PLAYER_SIZE) {
+        validateSizeOfResult(results, game);
+        return resultMapper.toGameResultResponse(game, results);
+    }
+
+    private void validateSizeOfResult(final List<Result> results, final Game game) {
+        if (isValidResultSize(results, game)) {
             throw new GameResultNotFoundException();
         }
-        return resultMapper.toGameResultResponse(game, results);
+    }
+
+    private boolean isValidResultSize(final List<Result> results, final Game game) {
+        return results.size() != game.getPlayerNum() * RESULT_PER_PLAYER_SIZE;
     }
 
     @Override

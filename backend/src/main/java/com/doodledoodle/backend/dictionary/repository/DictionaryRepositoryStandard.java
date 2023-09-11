@@ -10,5 +10,5 @@ import java.util.Set;
 public interface DictionaryRepositoryStandard extends EntityLoadRepository<Dictionary, Long> {
     Optional<Dictionary> findByKoreanName(final String koreanName);
 
-    List<Dictionary> findAllByEnglishNameIn(Set<String> englishNames);
+    List<Dictionary> findAllByEnglishNameIn(final Set<String> englishNames);
 }

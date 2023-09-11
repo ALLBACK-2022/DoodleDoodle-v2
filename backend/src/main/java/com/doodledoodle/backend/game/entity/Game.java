@@ -6,7 +6,6 @@ import com.doodledoodle.backend.global.audit.Auditable;
 import com.doodledoodle.backend.global.audit.BaseTime;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.UUID;

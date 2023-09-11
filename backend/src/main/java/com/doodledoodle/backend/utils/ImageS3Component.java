@@ -21,6 +21,7 @@ import java.util.UUID;
 public class ImageS3Component {
     private static final String MAIN_DIRECTORY = "drawimage/";
     private static final String FILE_EXTENSION_SPLITTER = ".";
+    private static final String EMPTY_DELIMITER = "";
     S3StorageProperties s3StorageProperties;
     AmazonS3Client amazonS3Client;
 
@@ -42,7 +43,7 @@ public class ImageS3Component {
     }
 
     private String getFileName(final MultipartFile file, final UUID drawId) {
-        return String.join("", MAIN_DIRECTORY, drawId.toString(),
+        return String.join(EMPTY_DELIMITER, MAIN_DIRECTORY, drawId.toString(),
                 FILE_EXTENSION_SPLITTER, StringUtils.getFilenameExtension(file.getOriginalFilename()));
     }
 }

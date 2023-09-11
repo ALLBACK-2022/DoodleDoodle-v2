@@ -3,7 +3,6 @@ package com.doodledoodle.backend.result.controller;
 import com.doodledoodle.backend.result.dto.response.DrawResultResponse;
 import com.doodledoodle.backend.result.dto.response.GameResultResponse;
 import com.doodledoodle.backend.result.service.ResultService;
-import com.doodledoodle.backend.result.service.ResultServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

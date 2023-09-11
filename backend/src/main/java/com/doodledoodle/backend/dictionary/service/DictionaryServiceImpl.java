@@ -5,8 +5,8 @@ import com.doodledoodle.backend.dictionary.entity.Dictionary;
 import com.doodledoodle.backend.dictionary.mapper.DictionaryMapper;
 import com.doodledoodle.backend.dictionary.repository.DictionaryRepository;
 import com.doodledoodle.backend.global.exception.EntityNotFoundException;
-import com.doodledoodle.backend.result.dto.collection.EnglishNameMap;
-import com.doodledoodle.backend.result.dto.collection.SimilarityMap;
+import com.doodledoodle.backend.result.entity.collection.DrawSimilarity;
+import com.doodledoodle.backend.result.entity.collection.EnglishNames;
 import com.doodledoodle.backend.utils.RandomGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +38,10 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public EnglishNameMap getDictionaryMapByEnglishNames(final SimilarityMap similarityMap) {
-        final Set<String> englishNames = similarityMap.getKeySet();
+    public EnglishNames getDictionaryMapByEnglishNames(final DrawSimilarity drawSimilarity) {
+        final Set<String> englishNames = drawSimilarity.getEnglishNames();
         final List<Dictionary> dictionaries = dictionaryRepository.findAllByEnglishNameIn(englishNames);
-        return new EnglishNameMap(dictionaries);
+        return new EnglishNames(dictionaries);
     }
 
     @Override

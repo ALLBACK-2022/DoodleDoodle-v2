@@ -19,7 +19,7 @@ public class CustomAmazonS3Client extends AmazonS3Client {
 
     @Override
     public URL getUrl(String bucketName, String key) {
-        URL parentUrl = null;
+        URL parentUrl;
         try {
             parentUrl = new URL("http","1","2");
         } catch (MalformedURLException e) {

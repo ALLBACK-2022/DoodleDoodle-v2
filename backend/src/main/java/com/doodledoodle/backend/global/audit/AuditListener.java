@@ -1,7 +1,6 @@
 package com.doodledoodle.backend.global.audit;
 
 import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 import java.util.Optional;

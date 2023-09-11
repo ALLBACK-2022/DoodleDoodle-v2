@@ -2,7 +2,6 @@ package com.doodledoodle.backend.draw.controller;
 
 import com.doodledoodle.backend.draw.dto.response.DrawResponse;
 import com.doodledoodle.backend.draw.service.DrawService;
-import com.doodledoodle.backend.draw.service.DrawServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
