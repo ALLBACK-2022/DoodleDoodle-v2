@@ -11,9 +11,6 @@ import javax.persistence.*;
 @Entity
 @EqualsAndHashCode(of = "englishName")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes =
-        {@Index(name = "korean_name_index", columnList = "koreanName"),
-                @Index(name = "english_name_index", columnList = "englishName")})
 public class Dictionary {
     @Id
     private Long id;

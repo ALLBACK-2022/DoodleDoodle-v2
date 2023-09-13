@@ -17,6 +17,9 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "draw")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes =
+        {@Index(name = "game_id_index", columnList = "game_id"),
+                @Index(name = "draw_id_index", columnList = "draw_id")})
 public class Result implements Auditable {
 
     @Id
