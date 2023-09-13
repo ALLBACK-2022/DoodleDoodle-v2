@@ -40,18 +40,18 @@ public class ResultServiceImpl implements ResultService {
     public void saveResults(final ResultKafkaResponse resultKafkaResponse) {
         final Draw draw = drawService.loadEntity(resultKafkaResponse.getDrawId());
 
-        saveAllResult(new DrawSimilarity(resultKafkaResponse.getResult()), draw);
-        saveAllResult(new DrawSimilarity(resultKafkaResponse.getTopFive()), draw);
+        saveAllResult(new DrawSimilarity(resultKafkaResponse.getResult()), draw, true);
+        saveAllResult(new DrawSimilarity(resultKafkaResponse.getTopFive()), draw, false);
     }
 
-    private void saveAllResult(final DrawSimilarity drawSimilarity, final Draw draw) {
+    private void saveAllResult(final DrawSimilarity drawSimilarity, final Draw draw, final Boolean isRepresent) {
         final EnglishNames englishNames = dictionaryService.getDictionaryMapByEnglishNames(drawSimilarity);
         final DictionarySimilarity dictionarySimilarity = new DictionarySimilarity(drawSimilarity, englishNames);
-        saveAllByDictionarySimilarity(draw, dictionarySimilarity);
+        saveAllByDictionarySimilarity(draw, dictionarySimilarity, isRepresent);
     }
 
-    private void saveAllByDictionarySimilarity(final Draw draw, final DictionarySimilarity similarityMap) {
-        final List<Result> results = resultMapper.toEntityList(similarityMap, draw);
+    private void saveAllByDictionarySimilarity(final Draw draw, final DictionarySimilarity similarityMap, final Boolean isRepresent) {
+        final List<Result> results = resultMapper.toEntityList(similarityMap, draw, isRepresent);
         resultRepository.saveAll(results);
     }
 

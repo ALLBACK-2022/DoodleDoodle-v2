@@ -42,16 +42,28 @@ public class Result implements Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Draw draw;
 
+    @Column(nullable = false)
+    private Boolean isRepresent;
+
     @Setter
     @Embedded
     @Column(nullable = false)
     private BaseTime baseTime;
 
     @Builder
-    public Result(final Dictionary dictionary, final Double similarity, final Game game, final Draw draw) {
+    public Result(final Dictionary dictionary, final Double similarity, final Game game, final Draw draw, final Boolean isRepresent) {
         this.dictionary = dictionary;
         this.similarity = similarity;
         this.game = game;
         this.draw = draw;
+        this.isRepresent = isRepresent;
+    }
+
+    public Boolean isNotRepresent() {
+        return !this.isRepresent;
+    }
+
+    public Boolean isRepresentResultByEnglishName(final String englishName) {
+        return this.dictionary.getEnglishName().equals(englishName) && this.isRepresent;
     }
 }

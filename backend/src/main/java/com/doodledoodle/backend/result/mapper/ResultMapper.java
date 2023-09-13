@@ -17,22 +17,23 @@ import java.util.stream.Collectors;
 
 @Component
 public class ResultMapper {
-    public Result toEntity(final Dictionary dictionary, final Double similarity, final Draw draw, final Game game) {
+    public Result toEntity(final Dictionary dictionary, final Double similarity, final Draw draw, final Game game, final Boolean isRepresent) {
         return Result.builder()
                 .dictionary(dictionary)
                 .similarity(similarity)
                 .draw(draw)
                 .game(game)
+                .isRepresent(isRepresent)
                 .build();
     }
 
-    public List<Result> toEntityList(final DictionarySimilarity dictionarySimilarity, final Draw draw) {
+    public List<Result> toEntityList(final DictionarySimilarity dictionarySimilarity, final Draw draw, final Boolean isRepresent) {
         return dictionarySimilarity.getDictionaries().stream()
-                .map(key -> toEntity(key, dictionarySimilarity.getSimilarityByDictionary(key), draw, draw.getGame()))
+                .map(key -> toEntity(key, dictionarySimilarity.getSimilarityByDictionary(key), draw, draw.getGame(), isRepresent))
                 .collect(Collectors.toList());
     }
 
-    public DictionaryResultResponse toDictionaryResultResponse(final Result result) {
+    private DictionaryResultResponse toDictionaryResultResponse(final Result result) {
         Dictionary dictionary = result.getDictionary();
         return DictionaryResultResponse.builder()
                 .id(result.getId())
@@ -54,23 +55,23 @@ public class ResultMapper {
     }
 
     public DrawResultResponse toDrawResultResponse(final Draw draw, final List<Result> results) {
-        Result randomWordResult = toRandomWordResult(draw, results);
+        Result randomWordResult = toRandomWordResult(results);
         return DrawResultResponse.builder()
                 .imageUrl(draw.getImageUrl())
                 .randomWord(toDictionaryResultResponse(randomWordResult))
-                .topFive(toTopFive(toResultsWithoutRandomWord(results, randomWordResult)))
+                .topFive(toTopFive(toResultsWithoutRandomWord(results)))
                 .build();
     }
 
-    private List<Result> toResultsWithoutRandomWord(final List<Result> results, final Result randomWordResult) {
+    private List<Result> toResultsWithoutRandomWord(final List<Result> results) {
         return results.stream()
-                .filter(result -> !result.getId().equals(randomWordResult.getId()))
+                .filter(Result::isNotRepresent)
                 .collect(Collectors.toList());
     }
 
-    private Result toRandomWordResult(final Draw draw, final List<Result> results) {
+    private Result toRandomWordResult(final List<Result> results) {
         return results.stream()
-                .filter(r -> r.getDictionary().getEnglishName().equals(draw.getGame().getDictionary().getEnglishName()))
+                .filter(Result::getIsRepresent)
                 .findAny()
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -85,7 +86,7 @@ public class ResultMapper {
 
     private List<UserResultResponse> toUserResultResponseList(final String englishName, final List<Result> results) {
         return results.stream()
-                .filter(r -> r.getDictionary().getEnglishName().equals(englishName))
+                .filter(r -> r.isRepresentResultByEnglishName(englishName))
                 .map(this::toUserResultResponse)
                 .collect(Collectors.toList());
     }
