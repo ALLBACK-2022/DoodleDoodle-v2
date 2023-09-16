@@ -23,7 +23,7 @@ function MobileResultMulti({ percentage, rank, doodle, player, drawid, gameId })
     borderColor: 'black',
   };
   function onClick() {
-    navigate('../resultone', {
+    navigate(`../resultone?draw-id=${drawid}`, {
       replace: true,
       state: { isFromGamePage: gameId, drawId: drawid },
     });
