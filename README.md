@@ -35,7 +35,7 @@
 
 ### 기술적 특징
 - Service, Repository를 포함한 다양한 추상화
-- Fetch Join을 활용한 N+1문제 해결
+- Fetch Join을 활용한 N+1 문제 해결
 - 쿼리 성능을 위한 인덱스 사용
 - Kafka를 활용한 비동기 처리로 AI 로직 흐름 분리
 - Faust를 통한 멀티 프로세싱
@@ -50,5 +50,5 @@
 ## 개발 멤버
 |정윤호|정훈희|김승진|
 |:----:|:----:|:----:|
-|Backend, Deploy|Frontend|Backend, DevOps|
+|Backend, DevOps, Deploy|Frontend|Backend, DevOps|
 |<a href="https://github.com/yunhobb">@yunhobb</a>|<a href="https://github.com/JeongHunHui">@JeongHunHui</a>|<a href="https://github.com/ohksj77">@ohksj77</a>|
