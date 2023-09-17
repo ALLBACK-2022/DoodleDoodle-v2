@@ -15,9 +15,9 @@
 |메인 화면|서비스 정보 화면|
 |:----:|:----:|
 |<img src="https://user-images.githubusercontent.com/87285536/183126857-1a6d4f4d-5eca-4642-8905-de17b916f11b.png" width="400" height="200">|<img src="https://user-images.githubusercontent.com/87285536/183129494-d02d6fb0-0ea1-42a6-a4ad-cea33bcd4f66.png" width="400" height="200">|
-|그림 그리기 화면|개인용 결과 화면|
+|단어 선택 화면|그림 그리기 화면|
 |<img src="https://user-images.githubusercontent.com/87285536/183129750-2f08b0d8-fb9a-4bc9-a902-ab1efae2b9ae.png" width="400" height="200">|<img src="https://user-images.githubusercontent.com/87285536/183129775-743a7551-e917-4f3e-a510-a666c10c7804.png" width="400" height="200">|
-|다인용 결과 화면|프로젝트 정보 화면|
+|개인용 결과 화면|다인용 결과 화면|
 |<img src="https://user-images.githubusercontent.com/87285536/183130430-df1ab55d-d9e3-4ed8-a139-e3109106546c.png" width="400" height="200">|<img src="https://user-images.githubusercontent.com/87285536/183130463-c879b3d7-e7f4-475a-89f5-45ecdc3bdbc0.png" width="400" height="200">|
 
 ## Mobile Version
