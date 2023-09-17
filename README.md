@@ -2,13 +2,13 @@
 
 > 사용자의 그림을 AI가 맞추고 분석해주는 서비스
 
-[도메인 적용 후 링크 반영 예정](http://)
+[배포 완료 후 링크 반영 예정](http://)
 
 <div align=center>
 
-## Service 사용 예시
+## 서비스 사용 예시
 
-<img src="https://github.com/ohksj77/ohksj77/assets/89020004/b572dd5a-1602-4756-866a-b3854430979c">
+<img src="https://user-images.githubusercontent.com/95288297/184758633-21789c94-b510-402e-bf72-3825322e1461.gif">
 
 ## PC Version
 
