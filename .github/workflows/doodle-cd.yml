@@ -1,8 +1,10 @@
 name: Doodle Backend CD
 on:
- push:
-   branches:
-     - "main"
+  push:
+    branches:
+      - "main"
+    paths:
+      - "**.java"
      
 jobs:
   server-deploy:
