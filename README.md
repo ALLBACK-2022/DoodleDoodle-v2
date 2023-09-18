@@ -2,7 +2,7 @@
 
 > 사용자의 그림을 AI가 맞추고 분석해주는 서비스
 
-[배포 완료 후 링크 반영 예정](http://)
+[http://drawingdoodle.com/](http://drawingdoodle.com/)
 
 <div align=center>
 
