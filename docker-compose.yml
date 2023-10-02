@@ -9,6 +9,8 @@ services:
     environment: 
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+    volumes:
+      - postgresql_database:/var/lib/postgresql/data
     networks:
       - app-tier
 
@@ -93,3 +95,6 @@ services:
 networks:
   app-tier:
     driver: bridge
+
+volumes:
+  postgresql_database: null

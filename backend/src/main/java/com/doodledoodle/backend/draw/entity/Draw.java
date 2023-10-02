@@ -4,11 +4,24 @@ import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.audit.AuditListener;
 import com.doodledoodle.backend.global.audit.Auditable;
 import com.doodledoodle.backend.global.audit.BaseTime;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import com.fasterxml.uuid.Generators;
 import java.util.UUID;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -18,8 +31,6 @@ import java.util.UUID;
 public class Draw implements Auditable {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
     private String imageUrl;
@@ -28,7 +39,7 @@ public class Draw implements Auditable {
     private Integer playerNo;
 
     @JoinColumn
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Game game;
 
     @Setter
@@ -45,5 +56,20 @@ public class Draw implements Auditable {
 
     public void updateImgUrl(final String imgUrl) {
         this.imageUrl = imgUrl;
+    }
+
+    @PrePersist
+    public void createUserUniqId() {
+        //sequential uuid 생성
+        UUID uuid = Generators.timeBasedGenerator().generate();
+        String[] uuidArr = uuid.toString().split("-");
+        String uuidStr = uuidArr[2]+uuidArr[1]+uuidArr[0]+uuidArr[3]+uuidArr[4];
+        StringBuffer sb = new StringBuffer(uuidStr);
+        sb.insert(8, "-");
+        sb.insert(13, "-");
+        sb.insert(18, "-");
+        sb.insert(23, "-");
+        uuid = UUID.fromString(sb.toString());
+        this.id = uuid;
     }
 }

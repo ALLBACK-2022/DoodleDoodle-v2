@@ -5,12 +5,12 @@ server:
 spring:
   jpa:
     database: postgresql
-    show-sql: true
+    show-sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
     generate-ddl: true
     defer-datasource-initialization: true
 
@@ -67,3 +67,8 @@ cloud:
       auto: false
     stack:
       auto: false
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
