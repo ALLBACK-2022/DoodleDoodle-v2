@@ -17,14 +17,12 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "draw")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes =
-        {@Index(name = "game_id_index", columnList = "game_id"),
-                @Index(name = "draw_id_index", columnList = "draw_id")})
 public class Result implements Auditable {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
     @JoinColumn
@@ -34,12 +32,12 @@ public class Result implements Auditable {
     @Column(nullable = false)
     private Double similarity;
 
-    @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(columnDefinition = "BINARY(16)")
     private Game game;
 
-    @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(columnDefinition = "BINARY(16)")
     private Draw draw;
 
     @Column(nullable = false)

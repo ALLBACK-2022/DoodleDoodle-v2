@@ -4,6 +4,7 @@ import com.doodledoodle.backend.game.entity.Game;
 import com.doodledoodle.backend.global.audit.AuditListener;
 import com.doodledoodle.backend.global.audit.Auditable;
 import com.doodledoodle.backend.global.audit.BaseTime;
+import com.github.f4b6a3.ulid.UlidCreator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,17 +19,16 @@ import java.util.UUID;
 public class Draw implements Auditable {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     private String imageUrl;
 
     @Column(nullable = false)
     private Integer playerNo;
 
-    @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(columnDefinition = "BINARY(16)")
     private Game game;
 
     @Setter
